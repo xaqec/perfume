@@ -8,9 +8,9 @@
     <style>
         /* --- TEMEL AYARLAR --- */
         :root {
-            --primary: #1a1a1a;       /* Koyu Lüks Gri/Siyah */
-            --accent: #d4af37;        /* Gold */
-            --glass: rgba(255, 255, 255, 0.75);
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --glass: rgba(255, 255, 255, 0.85); /* Biraz daha opak yaptım okunsun diye */
             --blur: blur(20px);
             --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
         }
@@ -19,49 +19,58 @@
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background: var(--bg-gradient);
+            background: #eee; /* Resimler yüklenene kadar gri */
             overflow-x: hidden;
             color: var(--primary);
         }
 
-        /* --- ARKA PLAN (TAM EKRAN KAYAN GÖRSELLER) --- */
-        .marquee-wrapper {
+        /* --- ARKA PLAN (TAM EKRAN VE HIZLI) --- */
+        .bg-container {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 250vw; /* Ekranın 2.5 katı genişlik */
-            height: 250vh; /* Ekranın 2.5 katı yükseklik */
+            top: -25%; /* Ekranın dışına taşır */
+            left: -25%;
+            width: 150vw; /* Ekranın 1.5 katı genişlik */
+            height: 150vh; /* Ekranın 1.5 katı yükseklik */
             z-index: 0;
-            transform: rotate(-10deg); /* Hafif eğik */
+            transform: rotate(-10deg);
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            justify-content: center;
+            gap: 25px; /* Satırlar arası boşluk */
             pointer-events: none;
-            opacity: 0.5; /* Arka plan baskınlığı */
-            filter: blur(8px); /* İstenilen bulanıklık */
+            opacity: 0.6; /* Görünürlük ayarı */
+            filter: blur(5px); /* Hafif bulanıklık */
         }
 
-        .marquee-line {
+        .marquee-row {
             display: flex;
-            gap: 30px;
-            width: 200%;
+            width: 200%; /* Sonsuz döngü için ekstra uzunluk */
+            gap: 25px; /* Resimler arası boşluk */
+            flex-shrink: 0;
         }
 
-        .marquee-line.left { animation: slideLeft 50s linear infinite; }
-        .marquee-line.right { animation: slideRight 55s linear infinite; }
+        /* HIZLANDIRILMIŞ ANİMASYONLAR (20s - 25s) */
+        .marquee-row.left { animation: slideLeft 20s linear infinite; }
+        .marquee-row.right { animation: slideRight 25s linear infinite; }
 
         .m-img {
-            width: 400px;  /* Daha büyük resimler */
-            height: 280px;
+            width: 350px;
+            height: 220px;
             background-size: cover;
             background-position: center;
-            border-radius: 30px;
+            border-radius: 20px;
             flex-shrink: 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        @keyframes slideLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        @keyframes slideLeft { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-50%); } 
+        }
+        @keyframes slideRight { 
+            0% { transform: translateX(-50%); } 
+            100% { transform: translateX(0); } 
+        }
 
         /* --- NAVİGASYON --- */
         nav {
@@ -98,18 +107,17 @@
         }
         nav a:hover::after { width: 100%; }
 
-        /* --- MAIN HERO (MERKEZİ ALAN) --- */
+        /* --- MERKEZİ ALAN --- */
         .hero-section {
             height: 100vh;
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: center; /* Tam ortalar */
+            align-items: center;
             position: relative;
             z-index: 10;
         }
 
-        /* Cam Efektli Plaka */
         .glass-panel {
             background: var(--glass);
             backdrop-filter: var(--blur);
@@ -118,7 +126,7 @@
             border-radius: 50px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
             max-width: 900px;
             width: 90%;
             display: flex;
@@ -126,7 +134,7 @@
             align-items: center;
         }
 
-        /* İNTERAKTİF YÜZ (KAFA) */
+        /* İNTERAKTİF YÜZ */
         .face-container {
             width: 80px;
             height: 80px;
@@ -144,7 +152,7 @@
         .eyes-wrapper {
             display: flex;
             gap: 8px;
-            margin-bottom: 5px; /* Gözleri biraz yukarı al */
+            margin-bottom: 5px;
         }
 
         .eye {
@@ -177,10 +185,9 @@
             bottom: 18px;
         }
 
-        /* WELCOME YAZISI */
         .hero-title {
             font-family: 'Syne', sans-serif;
-            font-size: 8rem; /* Kocaman */
+            font-size: 8rem;
             font-weight: 800;
             color: var(--primary);
             line-height: 0.9;
@@ -188,7 +195,7 @@
             letter-spacing: -3px;
         }
 
-        /* ARAMA ÇUBUĞU & TYPING EFEKTİ */
+        /* ARAMA ÇUBUĞU */
         .search-platform {
             background: #fff;
             padding: 15px 30px;
@@ -203,10 +210,7 @@
             margin-bottom: 40px;
         }
 
-        .search-icon {
-            font-size: 20px;
-            color: #999;
-        }
+        .search-icon { font-size: 20px; color: #999; }
 
         .typing-container {
             font-family: 'Inter', sans-serif;
@@ -214,20 +218,13 @@
             color: #555;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 2px solid var(--accent); /* İmleç */
+            border-right: 2px solid var(--accent);
             width: 0;
-            animation: typing 4s steps(40, end) forwards, blink .75s step-end infinite;
+            animation: typing 3s steps(40, end) forwards, blink .75s step-end infinite;
         }
 
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        @keyframes blink {
-            from, to { border-color: transparent }
-            50% { border-color: var(--accent) }
-        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
         .cta-btn {
             background: var(--primary);
@@ -240,12 +237,9 @@
             transition: 0.3s;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            background: #000;
-        }
+        .cta-btn:hover { transform: translateY(-3px); background: #000; }
 
-        /* --- QUIZ BÖLÜMÜ --- */
+        /* --- QUIZ --- */
         .quiz-section {
             background: #fff;
             min-height: 100vh;
@@ -257,23 +251,11 @@
         }
 
         .quiz-wrapper { width: 100%; max-width: 1000px; text-align: center; }
-
         .question-card { display: none; animation: fadeUp 0.6s ease; }
         .question-card.active { display: block; }
-
-        .q-text {
-            font-family: 'Syne', sans-serif;
-            font-size: 40px;
-            margin-bottom: 50px;
-            font-weight: 700;
-        }
-
-        .opts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
+        .q-text { font-family: 'Syne', sans-serif; font-size: 40px; margin-bottom: 50px; font-weight: 700; }
+        .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        
         .opt-btn {
             padding: 30px;
             background: #f9f9f9;
@@ -284,13 +266,9 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .opt-btn:hover {
-            border-color: var(--accent);
-            background: #fffcf5;
-            transform: translateY(-5px);
-        }
+        .opt-btn:hover { border-color: var(--accent); background: #fffcf5; transform: translateY(-5px); }
 
-        /* SONUÇ KARTI */
+        /* SONUÇ */
         #result-area {
             display: none;
             background: #fff;
@@ -298,40 +276,24 @@
             box-shadow: 0 40px 100px rgba(0,0,0,0.1);
             overflow: hidden;
             border: 1px solid #eee;
-            flex-direction: row; /* Yan yana */
+            flex-direction: row;
             text-align: left;
         }
 
-        .res-img {
-            flex: 1;
-            background: #f4f4f4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-        }
+        .res-img { flex: 1; background: #f4f4f4; display: flex; align-items: center; justify-content: center; padding: 40px; }
         .res-img img { max-width: 100%; max-height: 400px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1)); }
-
-        .res-info {
-            flex: 1.5;
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
+        .res-info { flex: 1.5; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
         .res-brand { color: var(--accent); letter-spacing: 2px; font-weight: 700; font-size: 14px; text-transform: uppercase; }
         .res-name { font-family: 'Syne', sans-serif; font-size: 50px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; }
         .res-desc { color: #666; line-height: 1.6; margin-bottom: 30px; }
 
         @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
-        /* Mobil */
         @media(max-width: 768px) {
             .hero-title { font-size: 4rem; }
-            .marquee-wrapper { width: 300vw; }
             #result-area { flex-direction: column; }
             .glass-panel { padding: 40px 20px; }
+            .bg-container { width: 200vw; height: 100vh; top:0; left: -50%; }
         }
     </style>
 </head>
@@ -344,27 +306,36 @@
         <a href="#">Contact</a>
     </nav>
 
-    <div class="marquee-wrapper">
-        <div class="marquee-line left">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=600');"></div>
+    <div class="bg-container">
+        <div class="marquee-row left">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=400');"></div>
         </div>
-        <div class="marquee-line right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?q=80&w=600');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=600');"></div>
+        <div class="marquee-row right">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=400');"></div>
         </div>
-        <div class="marquee-line left">
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=600');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?q=80&w=600');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=600');"></div>
+        <div class="marquee-row left">
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?q=80&w=400');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400');"></div>
+        </div>
+        <div class="marquee-row right">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?q=80&w=400');"></div>
         </div>
     </div>
 
@@ -481,12 +452,11 @@
     </div>
 
     <script>
-        // --- GÖZ & KAFA TAKİBİ ---
+        // GÖZ & KAFA TAKİBİ
         const pupils = document.querySelectorAll('.pupil');
         const face = document.querySelector('.face-container');
 
         window.addEventListener('mousemove', (e) => {
-            // Gözler için
             pupils.forEach(pupil => {
                 const rect = pupil.getBoundingClientRect();
                 const x = (rect.left + rect.right) / 2;
@@ -496,7 +466,6 @@
                 pupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
             });
 
-            // Kafa için hafif dönüş (3D hissiyatı)
             if(face) {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
@@ -506,7 +475,7 @@
             }
         });
 
-        // --- VERİTABANI ---
+        // VERİTABANI
         const db = [
             { id:1, cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
             { id:2, cat:'enerjik', brand:'D&G', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi.', top:'Limon, Elma', base:'Sedir Ağacı' },
@@ -553,7 +522,6 @@
 
                 const r = document.getElementById('result-area');
                 r.style.display = 'flex';
-                // Mobil için düzeltme
                 if(window.innerWidth <= 768) r.style.flexDirection = 'column';
 
             }, 2000);
