@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scent Palette - Kişisel Koku Danışmanı</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Scent Palette - Lüks Koku Deneyimi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* GENEL AYARLAR */
+        /* --- RENK PALETİ VE TEMEL AYARLAR --- */
         :root {
-            --gold: #d4af37;
-            --soft-pink: #fce4ec;
-            --dark-text: #2c1810;
-            --plate-bg: rgba(255, 255, 255, 0.95);
+            --luxury-pink: #d81b60; /* Canlı Lüks Pembe */
+            --soft-rose: #fce4ec;   /* Açık Gül */
+            --gold: #d4af37;        /* Gold */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --text-dark: #1a1a1a;
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background-color: #fff0f5;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             overflow-x: hidden;
+            color: var(--text-dark);
         }
 
-        /* 1. NAVİGASYON BAR */
+        /* --- NAVİGASYON --- */
         nav {
             position: fixed;
             top: 0;
@@ -30,48 +32,41 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         nav a {
             text-decoration: none;
-            color: var(--dark-text);
-            font-weight: 700;
-            font-size: 13px;
+            color: var(--text-dark);
+            font-weight: 800;
+            font-size: 12px;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-family: 'Syne', sans-serif;
+            transition: color 0.3s;
         }
 
-        /* 2. WELCOME EKRANI (FIGMA TARZI AKIŞKAN ARKA PLAN) */
-        .hero-section {
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff;
-        }
+        nav a:hover { color: var(--luxury-pink); }
 
-        /* Kayan Kartlar Arka Planı */
-        .marquee-container {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            top: -25%;
-            left: -25%;
+        /* --- ARKA PLAN ANİMASYONU (MARQUEE) --- */
+        .background-marquee {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: 0; /* En arkada */
+            transform: rotate(-15deg); /* Hafif eğik */
             display: flex;
             flex-direction: column;
             gap: 20px;
-            opacity: 0.6; /* Bulanıklık hissi için opaklık */
-            filter: blur(6px); /* Fotoğrafları bulanıklaştırır */
-            z-index: 1;
-            transform: rotate(-15deg); /* Hafif eğik duruş */
+            opacity: 0.4; /* Arka plan olduğu için soluk */
+            filter: blur(4px); /* Bulanık */
+            pointer-events: none; /* Tıklanmayı engelle */
         }
 
         .marquee-row {
@@ -80,220 +75,251 @@
             width: 200%;
         }
 
-        .marquee-row.left { animation: slideLeft 40s linear infinite; }
-        .marquee-row.right { animation: slideRight 45s linear infinite; }
+        .marquee-row.left { animation: slideLeft 60s linear infinite; }
+        .marquee-row.right { animation: slideRight 65s linear infinite; }
 
-        .img-card {
-            width: 300px;
-            height: 200px;
-            border-radius: 40px; /* Yuvarlak köşeler */
+        .bg-img {
+            width: 250px;
+            height: 180px;
             background-size: cover;
             background-position: center;
+            border-radius: 20px;
             flex-shrink: 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            opacity: 0.8;
         }
 
         @keyframes slideLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes slideRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-        /* Welcome Plakası (Ön Plan) */
-        .welcome-plate {
+        /* --- WELCOME EKRANI --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
             z-index: 10;
-            background: var(--plate-bg);
-            padding: 60px 100px;
-            border-radius: 20px; /* Dikdörtgen plaka */
-            border: 2px solid var(--gold);
-            box-shadow: 
-                0 0 0 10px rgba(255,255,255,0.5), /* Çift çerçeve etkisi */
-                0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .glass-plate {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 60px 80px;
+            border-radius: 40px;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 50px rgba(216, 27, 96, 0.15); /* Pembe gölge */
             max-width: 800px;
-            animation: popUp 1s ease-out;
+            position: relative;
         }
 
         .welcome-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 90px;
-            font-weight: 700;
-            color: var(--dark-text);
+            font-family: 'Syne', sans-serif;
+            font-size: 100px;
+            font-weight: 800;
+            color: #fff;
             margin: 0;
-            line-height: 1;
-            text-transform: uppercase;
-            text-shadow: 4px 4px 0px rgba(212, 175, 55, 0.2); /* Art Deco Gölge */
+            line-height: 0.9;
+            text-shadow: 0 0 20px rgba(0,0,0,0.1), -1px -1px 0 #ccc, 1px 1px 0 #eee; /* Modern Beyaz Efekt */
+            -webkit-text-stroke: 2px #e0e0e0; /* Hafif dış hat */
         }
 
         .welcome-subtitle {
-            font-family: 'Syne', sans-serif;
-            font-size: 20px;
-            color: #666;
+            font-size: 18px;
+            color: #555;
             margin-top: 20px;
             letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* İNTERAKTİF GÖZLER */
+        .eyes-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .eye {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid var(--text-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 20px;
+            height: 20px;
+            background: var(--text-dark);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .start-btn {
-            display: inline-block;
             margin-top: 40px;
-            padding: 20px 50px;
-            background: var(--dark-text);
-            color: var(--gold);
+            padding: 20px 60px;
+            background: var(--luxury-pink);
+            color: white;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
             font-size: 18px;
-            font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3);
             text-decoration: none;
+            display: inline-block;
         }
-        
-        .start-btn:hover { transform: scale(1.05); }
 
-        /* 3. TEST VE SONUÇ ALANI */
+        .start-btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 15px 30px rgba(216, 27, 96, 0.4);
+            background: #ad1457;
+        }
+
+        /* --- QUIZ EKRANI --- */
         .quiz-section {
             min-height: 100vh;
-            background: radial-gradient(circle at center, #fff 0%, #fae1e6 100%);
+            background: #fff;
+            position: relative;
+            z-index: 20;
+            padding: 100px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 50px 20px;
-            position: relative;
         }
 
         .quiz-container {
             width: 100%;
-            max-width: 1000px;
-            text-align: center;
+            max-width: 1100px;
         }
 
         .question-card {
-            display: none; /* Başlangıçta gizli, JS ile açılacak */
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.6s ease;
         }
         
-        .question-card.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
+        .question-card.active { display: block; }
 
-        .question-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 40px;
-            color: var(--dark-text);
-            margin-bottom: 40px;
+        .q-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            color: var(--text-dark);
+            margin-bottom: 50px;
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
         }
 
         .option-btn {
-            background: white;
+            background: #fcfcfc;
             border: 2px solid #eee;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 25px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
         }
 
         .option-btn:hover {
-            border-color: var(--gold);
+            border-color: var(--luxury-pink);
+            background: #fff0f6;
             transform: translateY(-5px);
-            background: #fffcf0;
         }
 
-        /* SONUÇ KARTI TASARIMI (İstediğin Sol-Orta-Sağ Düzeni) */
-        .result-layout {
-            display: none;
+        /* --- SONUÇ KARTI --- */
+        #result {
+            display: none; /* JS ile flex yapılacak */
+            flex-direction: row;
             background: white;
             border-radius: 30px;
-            padding: 0;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
             overflow: hidden;
-            border: 1px solid var(--gold);
-            flex-direction: row;
-            text-align: left;
+            border: 1px solid #eee;
             margin-top: 20px;
         }
 
-        /* 1. Sol: Resim */
-        .res-img-col {
+        .res-col-img {
             flex: 1;
-            background: #fdfbf7;
+            background: #f8f8f8;
+            padding: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px;
-            border-right: 1px solid #eee;
         }
-        .res-img-col img {
+        
+        .res-col-img img {
             max-width: 100%;
             max-height: 400px;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2));
-            transition: transform 0.5s;
+            filter: drop-shadow(0 20px 20px rgba(0,0,0,0.15));
         }
-        .res-img-col img:hover { transform: scale(1.05) rotate(2deg); }
 
-        /* 2. Orta: İsim ve Marka */
-        .res-name-col {
-            flex: 1;
-            padding: 60px 40px;
+        .res-col-details {
+            flex: 1.5;
+            padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* Ortala */
-            text-align: center;
-            border-right: 1px solid #eee;
+            text-align: left;
         }
-        .res-brand {
-            font-family: 'Syne', sans-serif;
-            font-size: 16px;
-            letter-spacing: 4px;
-            color: #999;
+
+        .brand-tag {
+            color: var(--luxury-pink);
+            font-weight: 800;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            font-size: 14px;
             margin-bottom: 10px;
         }
-        .res-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 48px;
-            color: var(--gold);
-            line-height: 1.1;
+
+        .perfume-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1;
+            margin: 0 0 20px 0;
+            color: var(--text-dark);
         }
 
-        /* 3. Sağ: Detaylar */
-        .res-info-col {
-            flex: 1.2;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .note-title {
-            font-weight: 700;
-            color: var(--dark-text);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-        .note-desc {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 25px;
+        .perfume-desc {
+            font-size: 18px;
             line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
         }
 
-        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .notes-box {
+            background: #fffbfd;
+            border: 1px solid #ffeef5;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .notes-title { font-weight: 700; margin-bottom: 5px; color: var(--luxury-pink); }
+        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Mobil */
+        /* Mobil Uyum */
         @media (max-width: 900px) {
-            .result-layout { flex-direction: column; }
-            .welcome-title { font-size: 50px; }
-            .res-img-col, .res-name-col, .res-info-col { padding: 30px; border-right: none; border-bottom: 1px solid #eee; }
+            #result { flex-direction: column; }
+            .welcome-title { font-size: 60px; }
+            .glass-plate { padding: 40px 20px; width: 90%; }
+            .res-col-details { padding: 30px; }
         }
     </style>
 </head>
@@ -304,32 +330,44 @@
         <a href="#quiz">QUIZ</a>
         <a href="#">BLOG</a>
         <a href="#">CREATOR</a>
-        <a href="#">CONTACT US</a>
     </nav>
 
-    <div id="welcome" class="hero-section">
-        <div class="marquee-container">
-            <div class="marquee-row left">
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=600&auto=format&fit=crop');"></div>
-            </div>
-            <div class="marquee-row right">
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=600&auto=format&fit=crop');"></div>
-                <div class="img-card" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=600&auto=format&fit=crop');"></div>
-            </div>
+    <div class="background-marquee">
+        <div class="marquee-row left">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=400');"></div>
         </div>
+        <div class="marquee-row right">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=400');"></div>
+        </div>
+        <div class="marquee-row left">
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?q=80&w=400');"></div>
+            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=400');"></div>
+             <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400');"></div>
+        </div>
+    </div>
 
-        <div class="welcome-plate">
+    <div id="welcome" class="hero-section">
+        <div class="glass-plate">
+            <div class="eyes-container">
+                <div class="eye"><div class="pupil"></div></div>
+                <div class="eye"><div class="pupil"></div></div>
+            </div>
+
             <h1 class="welcome-title">WELCOME</h1>
-            <p class="welcome-subtitle">Kokunuz, imzanızdır. Sizi anlayan yapay zeka destekli algoritma ile tanışın.</p>
+            <p class="welcome-subtitle">Kokunuz İmzanızdır.</p>
             <a href="#quiz" onclick="baslaTest()" class="start-btn">TESTİ BAŞLAT</a>
         </div>
     </div>
@@ -338,169 +376,173 @@
         <div class="quiz-container">
             
             <div class="question-card active" id="q1">
-                <div class="question-title">1. Hafta sonunu en ideal nasıl geçirirsin?</div>
+                <h2 class="q-title">1. Seni en iyi tanımlayan kelime hangisi?</h2>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="cevapVer('enerjik', 'q1', 'q2')">☀️ Sahilde koşarak veya doğa yürüyüşüyle</button>
-                    <button class="option-btn" onclick="cevapVer('romantik', 'q1', 'q2')">🌸 Sevdiğimle şık bir kafede kahvaltı</button>
-                    <button class="option-btn" onclick="cevapVer('gizemli', 'q1', 'q2')">🌙 Loş bir barda geceye karışarak</button>
-                    <button class="option-btn" onclick="cevapVer('sik', 'q1', 'q2')">✨ Sanat galerisi gezip alışveriş yaparak</button>
+                    <button class="option-btn" onclick="cevapVer('romantik', 'q1', 'q2')">💘 Duygusal ve Hayalperest</button>
+                    <button class="option-btn" onclick="cevapVer('enerjik', 'q1', 'q2')">⚡ Yerinde Duramayan ve Canlı</button>
+                    <button class="option-btn" onclick="cevapVer('gizemli', 'q1', 'q2')">🔮 Derin ve Anlaşılmaz</button>
+                    <button class="option-btn" onclick="cevapVer('sik', 'q1', 'q2')">💎 Zarif ve Kararlı</button>
                 </div>
             </div>
 
             <div class="question-card" id="q2">
-                <div class="question-title">2. Dolabındaki baskın renk paleti nedir?</div>
+                <h2 class="q-title">2. İdeal tatil rotan neresi?</h2>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="cevapVer('temiz', 'q2', 'q3')">⚪ Beyaz, bej ve pastel tonlar</button>
-                    <button class="option-btn" onclick="cevapVer('gizemli', 'q2', 'q3')">⚫ Siyah, koyu mor ve bordo</button>
-                    <button class="option-btn" onclick="cevapVer('enerjik', 'q2', 'q3')">🟠 Canlı turuncu, sarı ve maviler</button>
-                    <button class="option-btn" onclick="cevapVer('gurme', 'q2', 'q3')">🟤 Sıcak kahve, krem ve toprak tonları</button>
+                    <button class="option-btn" onclick="cevapVer('enerjik', 'q2', 'q3')">🌴 Tropikal bir ada partisi</button>
+                    <button class="option-btn" onclick="cevapVer('sik', 'q2', 'q3')">🗼 Paris veya Milano'da alışveriş</button>
+                    <button class="option-btn" onclick="cevapVer('romantik', 'q2', 'q3')">🏡 Göl kenarında sakin bir ev</button>
+                    <button class="option-btn" onclick="cevapVer('gizemli', 'q2', 'q3')">🌌 Kuzey ışıklarını izlemek</button>
                 </div>
             </div>
 
             <div class="question-card" id="q3">
-                <div class="question-title">3. En sevdiğin tatlı/yiyecek hangisi?</div>
+                <h2 class="q-title">3. En sevdiğin içecek türü?</h2>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="cevapVer('enerjik', 'q3', 'hesapla')">🍋 Limonlu Cheesecake</button>
-                    <button class="option-btn" onclick="cevapVer('gurme', 'q3', 'hesapla')">🍫 Yoğun Çikolatalı Brownie</button>
-                    <button class="option-btn" onclick="cevapVer('romantik', 'q3', 'hesapla')">🍓 Çilekli Tart</button>
-                    <button class="option-btn" onclick="cevapVer('sik', 'q3', 'hesapla')">🍷 Kuru meyveler ve şarap</button>
+                    <button class="option-btn" onclick="cevapVer('gurme', 'q3', 'q4')">☕ Bol köpüklü kahve veya sıcak çikolata</button>
+                    <button class="option-btn" onclick="cevapVer('enerjik', 'q3', 'q4')">🍹 Taze sıkılmış meyve kokteyli</button>
+                    <button class="option-btn" onclick="cevapVer('sik', 'q3', 'q4')">🥂 Yıllanmış şarap veya şampanya</button>
+                    <button class="option-btn" onclick="cevapVer('temiz', 'q3', 'q4')">🍵 Yeşil çay veya buzlu su</button>
+                </div>
+            </div>
+
+            <div class="question-card" id="q4">
+                <h2 class="q-title">4. Bir partide genelde nasılsındır?</h2>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="cevapVer('enerjik', 'q4', 'q5')">💃 Pistin tozunu attırırım</button>
+                    <button class="option-btn" onclick="cevapVer('gizemli', 'q4', 'q5')">👀 Köşeden insanları izlerim</button>
+                    <button class="option-btn" onclick="cevapVer('sik', 'q4', 'q5')">🤝 İnsanlarla networking yaparım</button>
+                    <button class="option-btn" onclick="cevapVer('romantik', 'q4', 'q5')">💬 Yakın arkadaşımla derin sohbetteyim</button>
+                </div>
+            </div>
+
+            <div class="question-card" id="q5">
+                <h2 class="q-title">5. Hangi kumaş dokusunu seversin?</h2>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="cevapVer('temiz', 'q5', 'q6')">☁️ Pamuk ve Keten (Doğal)</button>
+                    <button class="option-btn" onclick="cevapVer('sik', 'q5', 'q6')">🧣 İpek ve Kaşmir (Lüks)</button>
+                    <button class="option-btn" onclick="cevapVer('gizemli', 'q5', 'q6')">🌑 Deri ve Kadife (İddialı)</button>
+                    <button class="option-btn" onclick="cevapVer('romantik', 'q5', 'q6')">🎀 Dantel ve Şifon (Zarif)</button>
+                </div>
+            </div>
+
+            <div class="question-card" id="q6">
+                <h2 class="q-title">6. Favori mevsimin?</h2>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="cevapVer('romantik', 'q6', 'hesapla')">🌸 İlkbahar</button>
+                    <button class="option-btn" onclick="cevapVer('enerjik', 'q6', 'hesapla')">☀️ Yaz</button>
+                    <button class="option-btn" onclick="cevapVer('gurme', 'q6', 'hesapla')">🍂 Sonbahar</button>
+                    <button class="option-btn" onclick="cevapVer('gizemli', 'q6', 'hesapla')">❄️ Kış</button>
                 </div>
             </div>
 
             <div class="question-card" id="loading">
-                <h2 style="font-family:'Playfair Display'; color:#d4af37;">Yapay Zeka Analiz Ediyor...</h2>
-                <p>Kişilik özelliklerin ve zevklerin harmanlanıyor.</p>
-                <div style="font-size: 30px; animation: spin 1s infinite;">⏳</div>
+                <h2 class="q-title" style="color:var(--luxury-pink);">Analiz Ediliyor...</h2>
+                <p>Yapay zeka yanıtlarını işliyor.</p>
+                <div style="font-size: 40px; animation: spin 1s infinite;">💫</div>
             </div>
 
-            <div class="question-card" id="result">
-                <h2 class="question-title">Ruh Eşin Bulundu</h2>
-                <div class="result-layout">
-                    <div class="res-img-col">
-                        <img id="resImg" src="" alt="Parfüm Resmi">
-                    </div>
-                    <div class="res-name-col">
-                        <div class="res-brand" id="resBrand">MARKA</div>
-                        <div class="res-name" id="resName">Parfüm Adı</div>
-                    </div>
-                    <div class="res-info-col">
-                        <div class="note-title">Koku Profili</div>
-                        <div class="note-desc" id="resDesc">...</div>
-                        
-                        <div class="note-title">Üst Notalar</div>
-                        <div class="note-desc" id="resTop">...</div>
-
-                        <div class="note-title">Dip Notalar</div>
-                        <div class="note-desc" id="resBase">...</div>
-                    </div>
+            <div id="result">
+                <div class="res-col-img">
+                    <img id="resImg" src="" alt="Parfüm">
                 </div>
-                <button onclick="location.reload()" class="start-btn" style="margin-top:30px; font-size:14px;">Testi Tekrarla</button>
+                <div class="res-col-details">
+                    <div class="brand-tag" id="resBrand">MARKA</div>
+                    <h1 class="perfume-name" id="resName">Parfüm Adı</h1>
+                    <p class="perfume-desc" id="resDesc">Açıklama...</p>
+                    
+                    <div class="notes-box">
+                        <div class="notes-title">ÜST NOTALAR</div>
+                        <div style="margin-bottom:15px; color:#555;" id="resTop">...</div>
+                        
+                        <div class="notes-title">DİP NOTALAR</div>
+                        <div style="color:#555;" id="resBase">...</div>
+                    </div>
+
+                    <button onclick="location.reload()" class="start-btn" style="margin-top:30px; font-size:14px; background:#333;">TESTİ TEKRARLA</button>
+                </div>
             </div>
 
         </div>
     </div>
 
     <script>
-        // --- VERİTABANI (KATALOG) ---
-        // Telif hakkı sorunu olmaması için Wikimedia ve Unsplash gibi açık kaynak resimler veya temsili görseller kullanıldı.
+        // --- 1. GÖZ HAREKETİ (MOUSE TAKİBİ) ---
+        const pupils = document.querySelectorAll(".pupil");
+
+        window.addEventListener("mousemove", (e) => {
+            pupils.forEach((pupil) => {
+                // Gözün merkezini bul
+                const rect = pupil.getBoundingClientRect();
+                const x = (rect.left + rect.right) / 2;
+                const y = (rect.top + rect.bottom) / 2;
+
+                // Mouse ile göz arasındaki açıyı hesapla
+                const angle = Math.atan2(e.clientY - y, e.clientX - x);
+
+                // Göz bebeğini hareket ettir (maksimum 10px uzağa)
+                const distance = Math.min(10, Math.hypot(e.clientX - x, e.clientY - y) / 10);
+                const xMove = Math.cos(angle) * distance;
+                const yMove = Math.sin(angle) * distance;
+
+                pupil.style.transform = `translate(-50%, -50%) translate(${xMove}px, ${yMove}px)`;
+            });
+        });
+
+        // --- 2. VERİTABANI ---
         const parfumKatalogu = [
             {
-                id: 1,
-                tag: "romantik",
-                marka: "GUCCI",
-                ad: "Bloom",
+                id: 1, tag: "romantik", marka: "GUCCI", ad: "Bloom", 
                 resim: "https://fimgs.net/mdimg/perfume/375x500.44894.jpg",
-                desc: "Çiçeklerle dolu bir bahçede yürüyormuş hissi veren, son derece feminen ve zarif bir koku.",
-                ust: "Rangoon Sarmaşığı",
-                dip: "Sümbülteber, Yasemin Tomurcuğu"
+                desc: "Ruhunuzu çiçek bahçesine götüren, son derece feminen bir imza.",
+                ust: "Rangoon Sarmaşığı, Yasemin", dip: "Sümbülteber Kökü"
             },
             {
-                id: 2,
-                tag: "enerjik",
-                marka: "DOLCE & GABBANA",
-                ad: "Light Blue",
+                id: 2, tag: "enerjik", marka: "DOLCE & GABBANA", ad: "Light Blue", 
                 resim: "https://fimgs.net/mdimg/perfume/375x500.1068.jpg",
-                desc: "Sicilya yazının neşesini teninize taşıyan, ferahlatıcı ve enerji dolu bir başyapıt.",
-                ust: "Sicilya Limonu, Yeşil Elma",
-                dip: "Sedir Ağacı, Misk"
+                desc: "Akdeniz'in ferahlatıcı esintisi ve Sicilya yazlarının neşesi.",
+                ust: "Sicilya Limonu, Yeşil Elma", dip: "Sedir Ağacı, Misk"
             },
             {
-                id: 3,
-                tag: "gizemli",
-                marka: "TOM FORD",
-                ad: "Black Orchid",
+                id: 3, tag: "gizemli", marka: "TOM FORD", ad: "Black Orchid", 
                 resim: "https://fimgs.net/mdimg/perfume/375x500.1018.jpg",
-                desc: "Lüks, şehvetli ve karanlık. Modern zamanların en ikonik ve gizemli kokularından biri.",
-                ust: "Siyah Trüf, Ylang Ylang",
-                dip: "Bitter Çikolata, Tütsü, Paçuli"
+                desc: "Karanlık, lüks ve baştan çıkarıcı. Modern bir klasik.",
+                ust: "Siyah Trüf, Ylang Ylang", dip: "Bitter Çikolata, Tütsü"
             },
             {
-                id: 4,
-                tag: "sik",
-                marka: "CHANEL",
-                ad: "Coco Mademoiselle",
+                id: 4, tag: "sik", marka: "CHANEL", ad: "Coco Mademoiselle", 
                 resim: "https://fimgs.net/mdimg/perfume/375x500.611.jpg",
-                desc: "Özgür ruhlu kadınlar için tasarlanmış, hem taze hem de karakterli bir oryantal koku.",
-                ust: "Portakal, Mandalina",
-                dip: "Tonka Fasulyesi, Vanilya, Beyaz Misk"
+                desc: "Özgür ruhlu ve zarif kadınların vazgeçilmez kokusu.",
+                ust: "Portakal, Mandalina", dip: "Tonka, Vanilya, Beyaz Misk"
             },
             {
-                id: 5,
-                tag: "gurme",
-                marka: "YSL",
-                ad: "Black Opium",
+                id: 5, tag: "gurme", marka: "YSL", ad: "Black Opium", 
                 resim: "https://fimgs.net/mdimg/perfume/375x500.25324.jpg",
-                desc: "Adrenalini sevenler için kahve vurgulu, bağımlılık yaratan tatlı ve rock-chic bir koku.",
-                ust: "Armut, Pembe Biber",
-                dip: "Siyah Kahve, Vanilya"
+                desc: "Kahve ve vanilyanın bağımlılık yapan rock-chic enerjisi.",
+                ust: "Armut, Pembe Biber", dip: "Siyah Kahve, Vanilya"
             },
             {
-                id: 6,
-                tag: "temiz",
-                marka: "BYREDO",
-                ad: "Blanche",
-                resim: "https://fimgs.net/mdimg/perfume/375x500.4391.jpg",
-                desc: "Masumiyetin ve sadeliğin kokusu. Beyaz rengin parfüme dönüşmüş hali.",
-                ust: "Beyaz Gül, Pembe Biber",
-                dip: "Sarışın Ağaçlar, Misk"
-            },
-            {
-                id: 7,
-                tag: "gurme",
-                marka: "KILIAN",
-                ad: "Love, Don't Be Shy",
-                resim: "https://fimgs.net/mdimg/perfume/375x500.4322.jpg",
-                desc: "Rihanna'nın imza kokusu olarak bilinen, marshmallow ve portakal çiçeği rüyası.",
-                ust: "Neroli, Bergamot",
-                dip: "Marshmallow, Vanilya, Karamel"
+                id: 6, tag: "temiz", marka: "MAISON MARGIELA", ad: "Lazy Sunday Morning", 
+                resim: "https://fimgs.net/mdimg/perfume/375x500.20542.jpg",
+                desc: "Pazar sabahı temiz çarşafların verdiği huzur ve tazelik.",
+                ust: "Aldehitler, Armut", dip: "Beyaz Misk, Paçuli"
             }
         ];
 
-        // --- YAPAY ZEKA MANTIĞI (ALGORİTMA) ---
-        let kullaniciSkoru = {
-            romantik: 0,
-            enerjik: 0,
-            gizemli: 0,
-            sik: 0,
-            gurme: 0,
-            temiz: 0
-        };
+        let kullaniciSkoru = { romantik: 0, enerjik: 0, gizemli: 0, sik: 0, gurme: 0, temiz: 0 };
 
         function baslaTest() {
-            // Smooth scroll ile aşağı indir
+            // Smooth scroll
         }
 
         function cevapVer(kategori, suankiSoruId, sonrakiSoruId) {
-            // 1. Puanı Ekle
-            if(kullaniciSkoru[kategori] !== undefined) {
-                kullaniciSkoru[kategori]++;
-            }
+            // Skor ekle
+            if(kullaniciSkoru[kategori] !== undefined) kullaniciSkoru[kategori]++;
 
-            // 2. Şu anki soruyu gizle
+            // Soruyu gizle
             document.getElementById(suankiSoruId).style.display = 'none';
             document.getElementById(suankiSoruId).classList.remove('active');
 
-            // 3. Sonraki adıma geç
+            // Sonraki adıma geç
             if (sonrakiSoruId === 'hesapla') {
                 sonuclariHesapla();
             } else {
@@ -511,30 +553,23 @@
         }
 
         function sonuclariHesapla() {
-            // Yükleniyor ekranını göster
             document.getElementById('loading').style.display = 'block';
 
-            // Yapay zeka "düşünüyormuş" gibi bekle (2 saniye)
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 
-                // En yüksek puanlı kategoriyi bul
+                // En yüksek skoru bul
                 let enYuksekKategori = Object.keys(kullaniciSkoru).reduce((a, b) => 
                     kullaniciSkoru[a] > kullaniciSkoru[b] ? a : b
                 );
 
-                // O kategoriye ait parfümleri veritabanından süz
+                // Kategoriden rastgele parfüm seç
                 let uygunParfumler = parfumKatalogu.filter(p => p.tag === enYuksekKategori);
+                if(uygunParfumler.length === 0) uygunParfumler = parfumKatalogu.filter(p => p.tag === 'sik');
                 
-                // Eğer tam eşleşme yoksa rastgele bir şık/popüler parfüm öner
-                if(uygunParfumler.length === 0) {
-                    uygunParfumler = parfumKatalogu.filter(p => p.tag === 'sik');
-                }
-
-                // O kategoriden rastgele birini seç
                 let secilen = uygunParfumler[Math.floor(Math.random() * uygunParfumler.length)];
 
-                // Ekrana Bas
+                // Verileri Ekrana Bas
                 document.getElementById('resImg').src = secilen.resim;
                 document.getElementById('resBrand').innerText = secilen.marka;
                 document.getElementById('resName').innerText = secilen.ad;
@@ -542,15 +577,12 @@
                 document.getElementById('resTop').innerText = secilen.ust;
                 document.getElementById('resBase').innerText = secilen.dip;
 
-                // Sonuç kartını aç
+                // Sonuç kartını görünür yap (display: flex olarak)
                 const resDiv = document.getElementById('result');
-                resDiv.style.display = 'block';
-                resDiv.style.display = 'flex'; // Flex yapısını korumak için
-                resDiv.classList.add('active');
-
-            }, 2000);
+                resDiv.style.display = 'flex'; 
+                
+            }, 1500);
         }
     </script>
-
 </body>
 </html>
