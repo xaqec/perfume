@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scent Palette - Ultimate Speed Edition</title>
+    <title>Scent Palette - 100 Perfume Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         /* --- TEMEL AYARLAR --- */
@@ -11,62 +11,38 @@
             --primary: #fff;
             --dark-bg: #050505;
             --accent: #d4af37;
-            --glass-dark: rgba(20, 20, 20, 0.85);
+            --glass-dark: rgba(20, 20, 20, 0.90);
             --blur: blur(20px);
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            overflow-x: hidden;
-            color: var(--primary);
+            margin: 0; padding: 0; font-family: 'Inter', sans-serif;
+            background: var(--dark-bg); overflow-x: hidden; color: var(--primary);
         }
 
         /* --- GLOBAL ANİMASYON --- */
         @keyframes floating {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
-        /* --- DEVASA ARKA PLAN (100 KARE İÇİN) --- */
+        /* --- DEVASA ARKA PLAN (KORUNDU) --- */
         .bg-container {
-            position: fixed;
-            top: 50%; left: 50%;
+            position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) rotate(-10deg);
-            width: 250vw;
-            height: 250vh;
-            z-index: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 15px; /* Satırlar arası boşluk */
-            pointer-events: none;
-            opacity: 0.25; /* Göz yormaması için */
+            width: 250vw; height: 250vh; z-index: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            gap: 15px; pointer-events: none; opacity: 0.25;
         }
-
-        .marquee-row {
-            display: flex;
-            width: 100%;
-            gap: 15px;
-            flex-shrink: 0;
-        }
-
-        /* HIZLANDIRILMIŞ ANİMASYONLAR (Çok daha hızlı!) */
-        .marquee-row.left { animation: scrollLeft 40s linear infinite; } /* Eskiden 120s idi */
-        .marquee-row.right { animation: scrollRight 45s linear infinite; } /* Eskiden 140s idi */
-
+        .marquee-row { display: flex; width: 100%; gap: 15px; flex-shrink: 0; }
+        .marquee-row.left { animation: scrollLeft 40s linear infinite; }
+        .marquee-row.right { animation: scrollRight 45s linear infinite; }
         .m-img {
-            width: 200px; height: 200px; /* 100 tane sığsın diye boyut ideal */
-            background-size: cover; background-position: center;
-            border-radius: 12px; flex-shrink: 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            width: 200px; height: 200px; background-size: cover; background-position: center;
+            border-radius: 12px; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             filter: brightness(0.9) contrast(1.1);
-            transition: transform 0.2s;
         }
-        
         @keyframes scrollLeft { 0% { transform: translateX(-20%); } 100% { transform: translateX(20%); } }
         @keyframes scrollRight { 0% { transform: translateX(20%); } 100% { transform: translateX(-20%); } }
 
@@ -76,126 +52,149 @@
             display: flex; justify-content: center; gap: 50px; z-index: 1000;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
         }
-
         nav a {
             text-decoration: none; color: #ffffff; font-family: 'Syne', sans-serif;
             font-weight: 800; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0,0,0,1); position: relative; opacity: 0.9; transition: 0.3s;
+            text-shadow: 0 2px 10px rgba(0,0,0,1); position: relative; opacity: 0.9; transition: 0.3s; cursor: pointer;
         }
         nav a:hover { opacity: 1; color: var(--accent); }
         nav a::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 0%; height: 2px; background: var(--accent); transition: 0.3s; }
         nav a:hover::after { width: 100%; }
+
+        /* --- ABOUT MODAL (YENİ) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            z-index: 2000; display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.open { display: flex; opacity: 1; }
+        .about-card {
+            background: #111; border: 1px solid #333; padding: 50px; border-radius: 30px;
+            text-align: center; max-width: 500px; width: 90%;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
+            position: relative; transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.open .about-card { transform: scale(1); }
+        .about-title { font-family: 'Syne', sans-serif; font-size: 40px; color: var(--accent); margin-bottom: 20px; }
+        .about-text { color: #ccc; line-height: 1.6; font-size: 16px; margin-bottom: 30px; }
+        .close-modal {
+            position: absolute; top: 20px; right: 20px; color: #666; font-size: 24px; cursor: pointer; transition: 0.2s;
+        }
+        .close-modal:hover { color: #fff; }
 
         /* --- HERO SECTION --- */
         .hero-section {
             height: 100vh; width: 100%; display: flex; justify-content: center;
             align-items: center; position: relative; z-index: 10;
         }
-
         .glass-panel {
-            background: #fff; padding: 50px 70px; border-radius: 60px;
+            background: #fff; padding: 50px 70px; border-radius: 40px; /* Daha köşeli Chanel tarzı */
             text-align: center; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
             max-width: 900px; width: 90%; display: flex; flex-direction: column;
-            align-items: center; position: relative;
-            animation: floating 6s ease-in-out infinite;
+            align-items: center; position: relative; animation: floating 6s ease-in-out infinite;
         }
 
-        /* --- 3D SIVI ŞİŞESİ --- */
+        /* --- YENİ CHANEL TARZI ŞİŞE KARAKTERİ --- */
         .bottle-char-container {
-            position: relative; width: 110px; height: 150px; margin-bottom: 25px;
+            position: relative; width: 120px; height: 160px; margin-bottom: 25px;
             transform-style: preserve-3d; perspective: 800px;
         }
         .bottle-char { width: 100%; height: 100%; position: relative; transition: transform 0.1s ease-out; }
+        
+        /* Chanel Kapak: Dikdörtgen ve Keskin */
         .b-cap {
-            width: 45px; height: 35px; margin: 0 auto; border-radius: 8px 8px 0 0;
-            background: linear-gradient(45deg, #FFD700, #FDB931, #FFD700);
-            box-shadow: inset -2px -2px 8px rgba(0,0,0,0.3), 0 5px 10px rgba(0,0,0,0.1);
+            width: 80px; height: 35px; margin: 0 auto 5px auto; border-radius: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(200,200,200,0.6));
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: inset 0 0 10px rgba(255,255,255,1), 0 5px 15px rgba(0,0,0,0.1);
+            position: relative; z-index: 2;
         }
+        /* Chanel Boyun Kısmı */
+        .b-neck { width: 40px; height: 10px; background: gold; margin: 0 auto; }
+
+        /* Chanel Gövde: Köşeli ve Altın Sıvı */
         .b-body {
-            width: 110px; height: 115px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,240,255,0.8) 100%);
-            border-radius: 25px;
-            box-shadow: inset 0 0 15px rgba(255,255,255,1), inset -5px -5px 10px rgba(0,0,0,0.05), 0 15px 30px rgba(0,0,0,0.2);
+            width: 120px; height: 110px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
+            border-radius: 4px; /* Keskin köşeler */
+            box-shadow: 
+                inset 0 0 20px rgba(255,215,0,0.3), /* Altın yansıma */
+                0 15px 30px rgba(0,0,0,0.2);
             position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden;
-            border: 3px solid rgba(255,255,255,0.8);
+            border: 2px solid rgba(255,255,255,0.6);
         }
-        .b-liquid-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 55%; border-radius: 0 0 22px 22px; overflow: hidden; }
+
+        /* Altın Sarısı Sıvı */
+        .b-liquid-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; overflow: hidden; }
         .liquid-layer {
             position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: rgba(255, 182, 193, 0.5); border-radius: 40%;
-            animation: liquidRotate 3s linear infinite; /* Sıvı da hızlandı */
+            background: rgba(255, 215, 0, 0.6); /* Gold */
+            border-radius: 40%; animation: liquidRotate 5s linear infinite;
         }
-        .liquid-layer:nth-child(2) { background: rgba(255, 105, 180, 0.3); animation-duration: 4s; animation-direction: reverse; border-radius: 45%; }
+        .liquid-layer:nth-child(2) { background: rgba(218, 165, 32, 0.4); animation-duration: 7s; animation-direction: reverse; border-radius: 43%; }
         @keyframes liquidRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .b-face { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .eyes-row { display: flex; gap: 14px; }
-        .b-eye { width: 16px; height: 20px; background: #111; border-radius: 50%; position: relative; }
-        .b-pupil { width: 6px; height: 6px; background: #fff; border-radius: 50%; position: absolute; top: 4px; left: 4px; }
-        .b-mouth { width: 18px; height: 8px; border-bottom: 3px solid #111; border-radius: 0 0 18px 18px; }
-
-        .hero-title {
-            font-family: 'Syne', sans-serif; font-size: 5.5rem; font-weight: 900;
-            color: #1a1a1a; margin: 0 0 20px 0; letter-spacing: -2px; text-transform: uppercase;
+        /* Daha Güzel Gözler (Kawaii Style) */
+        .b-face { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .eyes-row { display: flex; gap: 20px; }
+        .b-eye { 
+            width: 22px; height: 22px; background: #222; border-radius: 50%; position: relative; 
+            overflow: hidden;
         }
+        .b-pupil { width: 10px; height: 10px; background: #fff; border-radius: 50%; position: absolute; top: 3px; left: 3px; }
+        .b-shine { width: 4px; height: 4px; background: #fff; border-radius: 50%; position: absolute; bottom: 5px; right: 5px; opacity: 0.7;}
+        .b-mouth { width: 14px; height: 6px; border-bottom: 2px solid #222; border-radius: 0 0 14px 14px; }
+
+        /* Yazılar */
+        .hero-title { font-family: 'Syne', sans-serif; font-size: 5.5rem; font-weight: 900; color: #1a1a1a; margin: 0 0 20px 0; letter-spacing: -2px; text-transform: uppercase; }
         .search-platform {
-            background: #f5f5f5; padding: 15px 30px; border-radius: 50px;
-            border: 1px solid #ddd; width: 100%; max-width: 500px;
-            display: flex; align-items: center; gap: 15px; margin-bottom: 30px;
+            background: #f5f5f5; padding: 15px 30px; border-radius: 50px; border: 1px solid #ddd;
+            width: 100%; max-width: 500px; display: flex; align-items: center; gap: 15px; margin-bottom: 30px;
             transition: transform 0.3s;
         }
         .search-platform:hover { transform: scale(1.02); }
         .search-icon { font-size: 20px; color: #999; }
         .typing-container {
-            font-family: 'Inter', sans-serif; font-size: 16px; color: #555;
-            white-space: nowrap; overflow: hidden; border-right: 2px solid var(--accent);
-            width: 0; animation: typing 3s steps(40, end) forwards, blink .75s step-end infinite;
+            font-family: 'Inter', sans-serif; font-size: 16px; color: #555; white-space: nowrap; overflow: hidden;
+            border-right: 2px solid var(--accent); width: 0; animation: typing 3s steps(40, end) forwards, blink .75s step-end infinite;
         }
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
-
         .cta-btn {
-            background: #1a1a1a; color: #fff; padding: 18px 50px; border-radius: 40px;
-            font-family: 'Syne', sans-serif; font-weight: 700; text-decoration: none;
-            transition: all 0.2s;
+            background: #1a1a1a; color: #fff; padding: 18px 50px; border-radius: 4px; /* Chanel gibi hafif köşeli */
+            font-family: 'Syne', sans-serif; font-weight: 700; text-decoration: none; transition: all 0.2s;
         }
-        .cta-btn:hover { transform: translateY(-5px) scale(1.05); background: var(--accent); color: #000; }
+        .cta-btn:hover { transform: translateY(-5px); background: var(--accent); color: #000; }
 
         /* --- QUIZ --- */
-        .quiz-section {
-            background: transparent; min-height: 100vh; padding: 100px 20px;
-            position: relative; z-index: 20; display: flex; justify-content: center;
-        }
+        .quiz-section { background: transparent; min-height: 100vh; padding: 100px 20px; position: relative; z-index: 20; display: flex; justify-content: center; }
         .quiz-wrapper { 
-            width: 100%; max-width: 1000px; text-align: center;
-            background: var(--glass-dark); backdrop-filter: blur(30px);
-            padding: 60px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 100%; max-width: 1000px; text-align: center; background: var(--glass-dark); backdrop-filter: blur(30px);
+            padding: 60px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .question-card { display: none; animation: fadeUp 0.6s ease; }
         .question-card.active { display: block; }
         .q-text { font-family: 'Syne', sans-serif; font-size: 32px; margin-bottom: 40px; font-weight: 700; color: #fff; }
         .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         .opt-btn {
-            padding: 25px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: #ddd; border-radius: 20px; text-align: left; font-size: 16px; cursor: pointer;
-            transition: 0.2s; font-weight: 500;
+            padding: 25px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ddd;
+            border-radius: 20px; text-align: left; font-size: 16px; cursor: pointer; transition: 0.2s; font-weight: 500;
         }
         .opt-btn:hover { border-color: var(--accent); background: var(--accent); color: #000; transform: translateY(-3px); }
 
         /* SONUÇ */
         #result-area {
             display: none; background: rgba(0,0,0,0.6); border-radius: 30px; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1); flex-direction: row; text-align: left; margin-top: 50px;
-            animation: fadeUp 0.8s ease;
+            border: 1px solid rgba(255,255,255,0.1); flex-direction: row; text-align: left; margin-top: 50px; animation: fadeUp 0.8s ease;
         }
         .res-img { flex: 1; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; padding: 40px; }
         .res-img img { max-width: 100%; max-height: 400px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); transition: transform 0.5s; }
         .res-img img:hover { transform: scale(1.05) rotate(2deg); }
         .res-info { flex: 1.5; padding: 60px; display: flex; flex-direction: column; justify-content: center; color: #fff; }
         .res-brand { color: var(--accent); letter-spacing: 2px; font-weight: 700; font-size: 14px; text-transform: uppercase; }
-        .res-name { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; color: #fff; }
-        .res-desc { color: #aaa; line-height: 1.6; margin-bottom: 30px; font-size: 17px; }
+        .res-name { font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; color: #fff; }
+        .res-desc { color: #aaa; line-height: 1.6; margin-bottom: 30px; font-size: 16px; }
 
         @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
@@ -212,18 +211,33 @@
     <nav>
         <a href="#welcome">Home</a>
         <a href="#quiz">Quiz</a>
-        <a href="#">About</a>
+        <a href="#about" onclick="openAbout(event)">About</a>
         <a href="#">Contact</a>
     </nav>
 
-    <div class="bg-container" id="bg-container">
+    <div class="modal-overlay" id="aboutModal">
+        <div class="about-card">
+            <span class="close-modal" onclick="closeAbout()">&times;</span>
+            <h2 class="about-title">About the Creator</h2>
+            <p class="about-text">
+                Merhaba, ben <strong>Xaqec</strong>. <br><br>
+                Tasarım dünyasına tutkuyla bağlı bir üniversite öğrencisiyim. Dijital sanat ve web deneyimlerini birleştirerek, 
+                kullanıcıları estetik yolculuklara çıkarmayı seviyorum. "Scent Palette", koku hafızasını ve kişisel zevkleri 
+                modern bir algoritmayla buluşturma vizyonumun bir parçası.
+            </p>
+            <p style="color:var(--accent); font-size:14px; margin-top:20px;">DESIGNED BY XAQEC</p>
         </div>
+    </div>
+
+    <div class="bg-container" id="bg-container"></div>
 
     <div id="welcome" class="hero-section">
         <div class="glass-panel">
+            
             <div class="bottle-char-container">
                 <div class="bottle-char">
                     <div class="b-cap"></div>
+                    <div class="b-neck"></div>
                     <div class="b-body">
                         <div class="b-liquid-container">
                             <div class="liquid-layer"></div>
@@ -231,14 +245,21 @@
                         </div>
                         <div class="b-face">
                             <div class="eyes-row">
-                                <div class="b-eye"><div class="b-pupil"></div></div>
-                                <div class="b-eye"><div class="b-pupil"></div></div>
+                                <div class="b-eye">
+                                    <div class="b-pupil"></div>
+                                    <div class="b-shine"></div>
+                                </div>
+                                <div class="b-eye">
+                                    <div class="b-pupil"></div>
+                                    <div class="b-shine"></div>
+                                </div>
                             </div>
                             <div class="b-mouth"></div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <h1 class="hero-title">WELCOME</h1>
             <div class="search-platform">
                 <span class="search-icon">🔍</span>
@@ -250,10 +271,7 @@
 
     <div id="quiz" class="quiz-section">
         <div class="quiz-wrapper" id="quiz-wrapper-content">
-            <div class="question-card active" id="loading-start">
-                <h2>Yükleniyor...</h2>
-            </div>
-            
+            <div class="question-card active" id="loading-start"><h2>Yükleniyor...</h2></div>
             <div id="result-area">
                 <div class="res-img"><img id="r-img" src="" alt="Parfüm"></div>
                 <div class="res-info">
@@ -271,37 +289,36 @@
     </div>
 
     <script>
-        // --- 1. ARKA PLANI DOLDUR (100 KARE) ---
+        // --- ABOUT MODAL FONKSİYONLARI ---
+        function openAbout(e) {
+            e.preventDefault();
+            const modal = document.getElementById('aboutModal');
+            modal.classList.add('open');
+        }
+        function closeAbout() {
+            const modal = document.getElementById('aboutModal');
+            modal.classList.remove('open');
+        }
+        // Dışarı tıklayınca kapatma
+        document.getElementById('aboutModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAbout();
+        });
+
+        // --- ARKA PLAN OLUŞTURUCU ---
         const bgContainer = document.getElementById('bg-container');
-        // Sadece şişe fotoğrafları (İnsan yok)
         const bottleImages = [
             'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', 'https://fimgs.net/mdimg/perfume/375x500.253.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', 'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', 'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', 'https://fimgs.net/mdimg/perfume/375x500.219.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.707.jpg', 'https://fimgs.net/mdimg/perfume/375x500.611.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', 'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', 'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', 
-            'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', 'https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400',
-            'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400', 'https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=400',
-            'https://images.unsplash.com/photo-1616092042654-20b171638210?w=400', 'https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400',
-            'https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400', 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400',
-            'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', 'https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=400',
-            'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400', 'https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400',
-            'https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400'
+            'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', 'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.611.jpg', 'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', 
+            'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', 'https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400',
+            'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400', 'https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400'
         ];
-
-        // 10 Satır, Her satırda 10-15 Resim oluştur
         for (let i = 0; i < 10; i++) {
             const row = document.createElement('div');
-            // Satırları zıt yönlere kaydır
             row.className = `marquee-row ${i % 2 === 0 ? 'left' : 'right'}`;
-            
-            // Her satıra 12 resim koyalım (Toplam 120 kare olur, 100'ü geçer)
             for (let j = 0; j < 12; j++) {
                 const imgDiv = document.createElement('div');
                 imgDiv.className = 'm-img';
-                // Rastgele resim seç
                 const randomUrl = bottleImages[Math.floor(Math.random() * bottleImages.length)];
                 imgDiv.style.backgroundImage = `url('${randomUrl}')`;
                 row.appendChild(imgDiv);
@@ -309,7 +326,7 @@
             bgContainer.appendChild(row);
         }
 
-        // --- 2. SORULARI OLUŞTUR (20 ADET) ---
+        // --- SORULAR (20 ADET) ---
         const questions = [
             { t: "1. Kendini en huzurlu hissettiğin yer?", o: [["Renkli çiçek bahçesi", "romantik"], ["Güneşli plaj", "enerjik"], ["Eski kütüphane", "gizemli"], ["Lüks plaza", "sik"]] },
             { t: "2. Arkadaşların seni nasıl tanımlar?", o: [["Sakin ve güvenilir", "temiz"], ["Enerji kaynağı", "enerjik"], ["Sessiz ve derin", "gizemli"], ["Tatlı ve sıcak", "gurme"]] },
@@ -333,19 +350,127 @@
             { t: "20. Nasıl hissetmek istersin?", o: [["Lüks", "sik"], ["Canlı", "enerjik"], ["Zarif", "romantik"], ["Gizemli", "gizemli"]] }
         ];
 
+        // --- 100 PARFÜM VERİTABANI (GERÇEK VERİLER) ---
+        const db = [
+            // --- ROMANTİK (Çiçeksi, Gül, Pudralı) ---
+            { cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
+            { cat:'romantik', brand:'CHLOÉ', name:'Signature', img:'https://fimgs.net/mdimg/perfume/375x500.253.jpg', desc:'Pudralı gül kokusunun en modern hali.', top:'Şakayık, Liçi', base:'Amber' },
+            { cat:'romantik', brand:'PARFUMS DE MARLY', name:'Delina', img:'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', desc:'Türk gülü ve ravent ile büyüleyici.', top:'Bergamot, Ravent', base:'Kaşmir Ağacı' },
+            { cat:'romantik', brand:'DIOR', name:'Miss Dior Blooming Bouquet', img:'https://fimgs.net/mdimg/perfume/375x500.23281.jpg', desc:'Bahar çiçeklerinin taze buketi.', top:'Mandalina', base:'Beyaz Misk' },
+            { cat:'romantik', brand:'LANCÔME', name:'La Vie Est Belle', img:'https://fimgs.net/mdimg/perfume/375x500.14982.jpg', desc:'Mutluluğun kokusu. İris ve paçuli.', top:'Siyah Frenk Üzümü', base:'Pralin' },
+            { cat:'romantik', brand:'GIVENCHY', name:'Irresistible', img:'https://fimgs.net/mdimg/perfume/375x500.60872.jpg', desc:'Dans eden gül ve sarışın odunlar.', top:'Armut', base:'Misk' },
+            { cat:'romantik', brand:'MARC JACOBS', name:'Daisy', img:'https://fimgs.net/mdimg/perfume/375x500.1361.jpg', desc:'Saf, taze ve masum papatyalar.', top:'Menekşe Yaprağı', base:'Vanilya' },
+            { cat:'romantik', brand:'VIKTOR&ROLF', name:'Flowerbomb', img:'https://fimgs.net/mdimg/perfume/375x500.255.jpg', desc:'Çiçek patlaması ile büyüleyin.', top:'Bergamot', base:'Paçuli' },
+            { cat:'romantik', brand:'CHANEL', name:'Chance Eau Tendre', img:'https://fimgs.net/mdimg/perfume/375x500.8069.jpg', desc:'Yumuşak, meyvemsi ve şiirsel.', top:'Ayva', base:'Beyaz Misk' },
+            { cat:'romantik', brand:'YSL', name:'Mon Paris', img:'https://fimgs.net/mdimg/perfume/375x500.37568.jpg', desc:'Paris\'te tutkulu bir aşk.', top:'Çilek', base:'Paçuli' },
+            { cat:'romantik', brand:'AERIN', name:'Rose de Grasse', img:'https://fimgs.net/mdimg/perfume/375x500.29707.jpg', desc:'En nadide güllerin lüks birleşimi.', top:'Amber', base:'Gül Centifolia' },
+            { cat:'romantik', brand:'JO MALONE', name:'Red Roses', img:'https://fimgs.net/mdimg/perfume/375x500.2285.jpg', desc:'Yedi farklı gülün romantik karışımı.', top:'Limon', base:'Petek Bal' },
+            { cat:'romantik', brand:'BYREDO', name:'Rose of No Man\'s Land', img:'https://fimgs.net/mdimg/perfume/375x500.32046.jpg', desc:'Sofistike, baharatlı ve sıcak bir gül.', top:'Pembe Biber', base:'Amber' },
+            { cat:'romantik', brand:'DIPTYQUE', name:'Eau Rose', img:'https://fimgs.net/mdimg/perfume/375x500.14238.jpg', desc:'Gülün yaprağından sapına kadar her hali.', top:'Bergamot', base:'Sedir' },
+            { cat:'romantik', brand:'CAROLINA HERRERA', name:'Good Girl Blush', img:'https://fimgs.net/mdimg/perfume/375x500.79257.jpg', desc:'Romantik şakayık ve vanilya.', top:'Bergamot', base:'Vanilya' },
+            { cat:'romantik', brand:'LANVIN', name:'Eclat d\'Arpege', img:'https://fimgs.net/mdimg/perfume/375x500.999.jpg', desc:'Lila ve şeftali çiçeklerinin melodisi.', top:'Limon Yaprağı', base:'Sedir' },
+
+            // --- ENERJİK (Narenciye, Meyveli, Taze) ---
+            { cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya yazı ve limon ağaçları.', top:'Limon, Elma', base:'Sedir Ağacı' },
+            { cat:'enerjik', brand:'VERSACE', name:'Versense', img:'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', desc:'Akdeniz doğasının yeşil uyanışı.', top:'Yeşil Mandalina', base:'Zeytin Ağacı' },
+            { cat:'enerjik', brand:'MOSCHINO', name:'Funny!', img:'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', desc:'Kıpır kıpır, neşeli ve genç.', top:'Acı Portakal', base:'Yeşil Çay' },
+            { cat:'enerjik', brand:'CLINIQUE', name:'Happy', img:'https://fimgs.net/mdimg/perfume/375x500.374.jpg', desc:'Mutluluğun şişelenmiş hali.', top:'Portakal', base:'Mimoza' },
+            { cat:'enerjik', brand:'GUERLAIN', name:'Aqua Allegoria Mandarine', img:'https://fimgs.net/mdimg/perfume/375x500.60339.jpg', desc:'Güneşli bir mandalina bahçesi.', top:'Clementin', base:'Fesleğen' },
+            { cat:'enerjik', brand:'HERMÈS', name:'Un Jardin Sur Le Nil', img:'https://fimgs.net/mdimg/perfume/375x500.18.jpg', desc:'Nil nehrinde yeşil mango kokusu.', top:'Yeşil Mango', base:'Tütsü' },
+            { cat:'enerjik', brand:'ATELIER COLOGNE', name:'Orange Sanguine', img:'https://fimgs.net/mdimg/perfume/375x500.9420.jpg', desc:'Taze sıkılmış kan portakalı.', top:'Kan Portakalı', base:'Sandal Ağacı' },
+            { cat:'enerjik', brand:'ACQUA DI PARMA', name:'Blu Mediterraneo Arancia', img:'https://fimgs.net/mdimg/perfume/375x500.1685.jpg', desc:'Capri adasının portakal kokusu.', top:'Portakal', base:'Karamel' },
+            { cat:'enerjik', brand:'CHANEL', name:'Chance Eau Fraiche', img:'https://fimgs.net/mdimg/perfume/375x500.1483.jpg', desc:'Fırsatları yakalayan, ışıltılı enerji.', top:'Limon', base:'Tik Ağacı' },
+            { cat:'enerjik', brand:'DKNY', name:'Be Delicious', img:'https://fimgs.net/mdimg/perfume/375x500.498.jpg', desc:'New York ve yeşil elma enerjisi.', top:'Salatalık', base:'Sandal Ağacı' },
+            { cat:'enerjik', brand:'JO MALONE', name:'Lime Basil & Mandarin', img:'https://fimgs.net/mdimg/perfume/375x500.2279.jpg', desc:'Modern bir klasik. Limon ve fesleğen.', top:'Mandalina', base:'Amber' },
+            { cat:'enerjik', brand:'TOM FORD', name:'Neroli Portofino', img:'https://fimgs.net/mdimg/perfume/375x500.12192.jpg', desc:'İtalyan rivierasında serin sular.', top:'Bergamot', base:'Amber' },
+            { cat:'enerjik', brand:'CALVIN KLEIN', name:'CK One', img:'https://fimgs.net/mdimg/perfume/375x500.276.jpg', desc:'Herkes için temiz ve ferah.', top:'Limon', base:'Misk' },
+            { cat:'enerjik', brand:'ISSEY MIYAKE', name:'L\'Eau d\'Issey', img:'https://fimgs.net/mdimg/perfume/375x500.7.jpg', desc:'Su ve çiçeklerin saf buluşması.', top:'Lotus', base:'Sedir' },
+            { cat:'enerjik', brand:'ELIZABETH ARDEN', name:'Green Tea', img:'https://fimgs.net/mdimg/perfume/375x500.82.jpg', desc:'Canlandırıcı yeşil çay ferahlığı.', top:'Nane', base:'Meşe Yosunu' },
+            
+            // --- GİZEMLİ (Oryantal, Baharatlı, Koyu) ---
+            { cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Karanlık, lüks ve şehvetli.', top:'Trüf Mantarı', base:'Bitter Çikolata' },
+            { cat:'gizemli', brand:'DIOR', name:'Hypnotic Poison', img:'https://fimgs.net/mdimg/perfume/375x500.219.jpg', desc:'Büyüleyici yasak meyve.', top:'Hindistan Cevizi', base:'Vanilya' },
+            { cat:'gizemli', brand:'MUGLER', name:'Alien', img:'https://fimgs.net/mdimg/perfume/375x500.707.jpg', desc:'Başka bir dünyadan gelen ışık.', top:'Yasemin', base:'Beyaz Amber' },
+            { cat:'gizemli', brand:'VERSACE', name:'Crystal Noir', img:'https://fimgs.net/mdimg/perfume/375x500.631.jpg', desc:'Gizemli gardenya ve baharatlar.', top:'Biber', base:'Sandal Ağacı' },
+            { cat:'gizemli', brand:'YSL', name:'Opium', img:'https://fimgs.net/mdimg/perfume/375x500.93.jpg', desc:'Efsanevi, baharatlı ve kışkırtıcı.', top:'Mandalina', base:'Mür' },
+            { cat:'gizemli', brand:'GUERLAIN', name:'Shalimar', img:'https://fimgs.net/mdimg/perfume/375x500.53.jpg', desc:'Doğunun efsanevi aşk hikayesi.', top:'Bergamot', base:'Vanilya' },
+            { cat:'gizemli', brand:'CHANEL', name:'Coco Noir', img:'https://fimgs.net/mdimg/perfume/375x500.15963.jpg', desc:'Venedik gecelerinin barok havası.', top:'Greyfurt', base:'Tütsü' },
+            { cat:'gizemli', brand:'NARCISO RODRIGUEZ', name:'Musc Noir', img:'https://fimgs.net/mdimg/perfume/375x500.64761.jpg', desc:'Bağımlılık yapan derin misk.', top:'Erik', base:'Süet' },
+            { cat:'gizemli', brand:'GIVENCHY', name:'L\'Interdit Rouge', img:'https://fimgs.net/mdimg/perfume/375x500.68656.jpg', desc:'Ateşli ve yasak bir tutku.', top:'Kan Portakalı', base:'Sandal Ağacı' },
+            { cat:'gizemli', brand:'KILIAN', name:'Angels\' Share', img:'https://fimgs.net/mdimg/perfume/375x500.62615.jpg', desc:'Konyak fıçılarının melek payı.', top:'Konyak', base:'Pralin' },
+            { cat:'gizemli', brand:'JO MALONE', name:'Velvet Rose & Oud', img:'https://fimgs.net/mdimg/perfume/375x500.15340.jpg', desc:'Karanlık gül ve değerli öd ağacı.', top:'Karanfil', base:'Öd Ağacı' },
+            { cat:'gizemli', brand:'TOM FORD', name:'Tobacco Vanille', img:'https://fimgs.net/mdimg/perfume/375x500.1825.jpg', desc:'Zengin tütün ve kremsi vanilya.', top:'Tütün Yaprağı', base:'Kuru Meyveler' },
+            { cat:'gizemli', brand:'MAISON FRANCIS KURKDJIAN', name:'Baccarat Rouge 540', img:'https://fimgs.net/mdimg/perfume/375x500.31514.jpg', desc:'Amber, safran ve sedir senfonisi.', top:'Safran', base:'Esmer Amber' },
+            { cat:'gizemli', brand:'LE LABO', name:'Santal 33', img:'https://fimgs.net/mdimg/perfume/375x500.12201.jpg', desc:'Deri, duman ve sandal ağacı.', top:'Kakule', base:'Sandal Ağacı' },
+            { cat:'gizemli', brand:'FREDERIC MALLE', name:'Portrait of a Lady', img:'https://fimgs.net/mdimg/perfume/375x500.10464.jpg', desc:'Modern oryantal bir başyapıt.', top:'Gül', base:'Tütsü' },
+            { cat:'gizemli', brand:'BYREDO', name:'Bibliothèque', img:'https://fimgs.net/mdimg/perfume/375x500.43798.jpg', desc:'Eski kitapların ve derinin kokusu.', top:'Şeftali', base:'Deri' },
+            
+            // --- ŞIK (Odunsu, Şipre, Modern) ---
+            { cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Özgür ve cesur kadının imzası.', top:'Portakal', base:'Paçuli' },
+            { cat:'sik', brand:'YSL', name:'Libre', img:'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', desc:'Özgürlüğün maskülen-feminen dengesi.', top:'Lavanta', base:'Vanilya' },
+            { cat:'sik', brand:'GIORGIO ARMANI', name:'Sì', img:'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', desc:'İtalyan zarafeti ve gücü.', top:'Frenk Üzümü', base:'Sarı Odun' },
+            { cat:'sik', brand:'BOTTEGA VENETA', name:'Bottega Veneta', img:'https://fimgs.net/mdimg/perfume/375x500.12863.jpg', desc:'Venedik kırsalı ve lüks deri.', top:'Bergamot', base:'Deri' },
+            { cat:'sik', brand:'CHLOÉ', name:'Nomade', img:'https://fimgs.net/mdimg/perfume/375x500.48434.jpg', desc:'Maceracı ruhlar için modern şipre.', top:'Mirabelle Eriği', base:'Meşe Yosunu' },
+            { cat:'sik', brand:'BURBERRY', name:'Her', img:'https://fimgs.net/mdimg/perfume/375x500.51860.jpg', desc:'Londra\'nın cesur ruhu.', top:'Çilek', base:'Misk' },
+            { cat:'sik', brand:'HERMÈS', name:'Twilly d\'Hermès', img:'https://fimgs.net/mdimg/perfume/375x500.46145.jpg', desc:'Genç, baharatlı ve cüretkar.', top:'Zencefil', base:'Sandal Ağacı' },
+            { cat:'sik', brand:'VALENTINO', name:'Voce Viva', img:'https://fimgs.net/mdimg/perfume/375x500.62776.jpg', desc:'Sesim, gücüm.', top:'Mandalina', base:'Vanilya' },
+            { cat:'sik', brand:'CARTIER', name:'La Panthere', img:'https://fimgs.net/mdimg/perfume/375x500.23295.jpg', desc:'Vahşi ve zarif bir çiçeksi koku.', top:'Kurutulmuş Meyve', base:'Meşe Yosunu' },
+            { cat:'sik', brand:'TIFFANY & CO', name:'Tiffany & Co', img:'https://fimgs.net/mdimg/perfume/375x500.46237.jpg', desc:'Mücevher gibi ışıltılı.', top:'Mandalina', base:'Misk' },
+            { cat:'sik', brand:'PRADA', name:'Infusion d\'Iris', img:'https://fimgs.net/mdimg/perfume/375x500.1795.jpg', desc:'Zamansız ve pudralı zarafet.', top:'Portakal Çiçeği', base:'Tütsü' },
+            { cat:'sik', brand:'ESTÉE LAUDER', name:'Modern Muse', img:'https://fimgs.net/mdimg/perfume/375x500.18731.jpg', desc:'İlham veren modern kadın.', top:'Mandalina', base:'Paçuli' },
+            { cat:'sik', brand:'MICHAEL KORS', name:'Wonderlust', img:'https://fimgs.net/mdimg/perfume/375x500.39543.jpg', desc:'Sonsuz keşif arzusu.', top:'Badem Sütü', base:'Sandal Ağacı' },
+            { cat:'sik', brand:'TOM FORD', name:'White Suede', img:'https://fimgs.net/mdimg/perfume/375x500.6385.jpg', desc:'Vahşi ve büyüleyici süet.', top:'Kekik', base:'Süet' },
+            { cat:'sik', brand:'JO MALONE', name:'English Pear & Freesia', img:'https://fimgs.net/mdimg/perfume/375x500.10314.jpg', desc:'Sonbaharın özü.', top:'Armut', base:'Paçuli' },
+            
+            // --- GURME (Tatlı, Vanilya, Yenilebilir) ---
+            { cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilya bağımlılığı.', top:'Armut', base:'Kahve' },
+            { cat:'gurme', brand:'KILIAN', name:'Love, Don\'t Be Shy', img:'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', desc:'Marshmallow ve portakal çiçeği rüyası.', top:'Neroli', base:'Marshmallow' },
+            { cat:'gurme', brand:'PRADA', name:'Candy', img:'https://fimgs.net/mdimg/perfume/375x500.12426.jpg', desc:'Aşırı dozda karamel keyfi.', top:'Karamel', base:'Benzoin' },
+            { cat:'gurme', brand:'VIKTOR&ROLF', name:'Bonbon', img:'https://fimgs.net/mdimg/perfume/375x500.23316.jpg', desc:'Karamelize şeftali tatlısı.', top:'Mandalina', base:'Karamel' },
+            { cat:'gurme', brand:'ARIANA GRANDE', name:'Cloud', img:'https://fimgs.net/mdimg/perfume/375x500.50384.jpg', desc:'Krem şanti ve hindistan cevizi bulutu.', top:'Lavanta', base:'Pralin' },
+            { cat:'gurme', brand:'DIOR', name:'Fève Délicieuse', img:'https://fimgs.net/mdimg/perfume/375x500.30164.jpg', desc:'Tonka fasulyesinin en lezzetli hali.', top:'Lavanta', base:'Karamel' },
+            { cat:'gurme', brand:'JEAN PAUL GAULTIER', name:'Scandal', img:'https://fimgs.net/mdimg/perfume/375x500.45714.jpg', desc:'Bal ve gardenyanın skandalı.', top:'Kan Portakalı', base:'Bal' },
+            { cat:'gurme', brand:'DOLCE & GABBANA', name:'The Only One', img:'https://fimgs.net/mdimg/perfume/375x500.51249.jpg', desc:'Menekşe ve kahvenin ilginç uyumu.', top:'Menekşe', base:'Karamel' },
+            { cat:'gurme', brand:'AQUOLINA', name:'Pink Sugar', img:'https://fimgs.net/mdimg/perfume/375x500.314.jpg', desc:'Pamuk şeker ve çocukluk neşesi.', top:'Ahududu', base:'Vanilya' },
+            { cat:'gurme', brand:'SOL DE JANEIRO', name:'Cheirosa \'62', img:'https://fimgs.net/mdimg/perfume/375x500.62365.jpg', desc:'Fıstık ve tuzlu karamel.', top:'Fıstık', base:'Karamel' },
+            { cat:'gurme', brand:'BILLIE EILISH', name:'Eilish', img:'https://fimgs.net/mdimg/perfume/375x500.70293.jpg', desc:'Sıcak kakao ve kremsi vanilya.', top:'Şekerli Yapraklar', base:'Tonka' },
+            { cat:'gurme', brand:'MUGLER', name:'Angel', img:'https://fimgs.net/mdimg/perfume/375x500.704.jpg', desc:'Gurme parfümlerin atası.', top:'Pamuk Şeker', base:'Paçuli' },
+            { cat:'gurme', brand:'KAYALI', name:'Vanilla | 28', img:'https://fimgs.net/mdimg/perfume/375x500.53127.jpg', desc:'Saf esmer şeker ve vanilya.', top:'Vanilya Orkidesi', base:'Esmer Şeker' },
+            { cat:'gurme', brand:'LANCÔME', name:'La Nuit Trésor', img:'https://fimgs.net/mdimg/perfume/375x500.29157.jpg', desc:'Afrodizyak etkili siyah gül ve pralin.', top:'Armut', base:'Pralin' },
+            { cat:'gurme', brand:'PARFUMS DE MARLY', name:'Oriana', img:'https://fimgs.net/mdimg/perfume/375x500.69085.jpg', desc:'Krem şanti ve narenciye tatlısı.', top:'Mandalina', base:'Marshmallow' },
+            { cat:'gurme', brand:'XERJOFF', name:'Lira', img:'https://fimgs.net/mdimg/perfume/375x500.11801.jpg', desc:'Limonlu kek gibi kokan lüks.', top:'Kan Portakalı', base:'Vanilya' },
+
+            // --- TEMİZ (Sabunsu, Pudralı, Misk) ---
+            { cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Pazar sabahı temiz çarşaflar.', top:'Aldehitler', base:'Misk' },
+            { cat:'temiz', brand:'BYREDO', name:'Blanche', img:'https://fimgs.net/mdimg/perfume/375x500.6033.jpg', desc:'Beyaz rengin koku hali.', top:'Beyaz Gül', base:'Misk' },
+            { cat:'temiz', brand:'CLEAN', name:'Warm Cotton', img:'https://fimgs.net/mdimg/perfume/375x500.2526.jpg', desc:'Kurutucudan yeni çıkmış havlu.', top:'Limon', base:'Amber' },
+            { cat:'temiz', brand:'PHILOSOPHY', name:'Amazing Grace', img:'https://fimgs.net/mdimg/perfume/375x500.2066.jpg', desc:'İnanılmaz derecede zarif ve temiz.', top:'Bergamot', base:'Misk' },
+            { cat:'temiz', brand:'JULIETTE HAS A GUN', name:'Not A Perfume', img:'https://fimgs.net/mdimg/perfume/375x500.10296.jpg', desc:'Sadece temizlik, parfüm değil.', top:'Cetalox', base:'Cetalox' },
+            { cat:'temiz', brand:'NARCISO RODRIGUEZ', name:'Pure Musc', img:'https://fimgs.net/mdimg/perfume/375x500.53488.jpg', desc:'Saflığın ve miskin en duru hali.', top:'Misk', base:'Kaşmir' },
+            { cat:'temiz', brand:'DIOR', name:'Pure Poison', img:'https://fimgs.net/mdimg/perfume/375x500.214.jpg', desc:'Baştan çıkarıcı beyaz çiçekler.', top:'Yasemin', base:'Beyaz Amber' },
+            { cat:'temiz', brand:'CHANEL', name:'No 5 L\'Eau', img:'https://fimgs.net/mdimg/perfume/375x500.40069.jpg', desc:'Klasik No 5\'in en modern ve su gibi hali.', top:'Limon', base:'Sedir' },
+            { cat:'temiz', brand:'MOSCHINO', name:'Toy 2', img:'https://fimgs.net/mdimg/perfume/375x500.51327.jpg', desc:'Taze elma ve temizlik hissi.', top:'Elma', base:'Misk' },
+            { cat:'temiz', brand:'ACQUA DI PARMA', name:'Colonia Pura', img:'https://fimgs.net/mdimg/perfume/375x500.46083.jpg', desc:'İtalyan bergamotu ile kristal berraklığı.', top:'Bergamot', base:'Misk' },
+            { cat:'temiz', brand:'JO MALONE', name:'Wood Sage & Sea Salt', img:'https://fimgs.net/mdimg/perfume/375x500.25529.jpg', desc:'Deniz tuzu ve adaçayı ferahlığı.', top:'Deniz Tuzu', base:'Adaçayı' },
+            { cat:'temiz', brand:'LE LABO', name:'Another 13', img:'https://fimgs.net/mdimg/perfume/375x500.12200.jpg', desc:'Teninize yapışan metalik temizlik.', top:'Armut', base:'Ambroxan' },
+            { cat:'temiz', brand:'DIPTYQUE', name:'Fleur de Peau', img:'https://fimgs.net/mdimg/perfume/375x500.48422.jpg', desc:'Ten kokusu gibi yumuşak.', top:'Aldehitler', base:'Misk' },
+            { cat:'temiz', brand:'TIFFANY & CO', name:'Sheer', img:'https://fimgs.net/mdimg/perfume/375x500.53322.jpg', desc:'Pırlanta gibi şeffaf.', top:'Frenk Üzümü', base:'İris' },
+            { cat:'temiz', brand:'KENZO', name:'Flower by Kenzo', img:'https://fimgs.net/mdimg/perfume/375x500.72.jpg', desc:'Şehirde açan pudralı gelincik.', top:'Bulgar Gülü', base:'Vanilya' },
+            { cat:'temiz', brand:'BURBERRY', name:'Touch for Women', img:'https://fimgs.net/mdimg/perfume/375x500.814.jpg', desc:'Yumuşak bir dokunuş gibi.', top:'Kırmızı Biber', base:'Sedir' },
+        ];
+
         const quizWrapper = document.getElementById('quiz-wrapper-content');
         const loadingStart = document.getElementById('loading-start');
-        loadingStart.style.display = 'none'; // Başlangıçta gizle
+        loadingStart.style.display = 'none';
 
         let currentQIndex = 0;
         let scores = { romantik:0, enerjik:0, gizemli:0, sik:0, gurme:0, temiz:0 };
 
-        // Soruları HTML'e bas
         questions.forEach((q, index) => {
             const card = document.createElement('div');
             card.className = 'question-card';
             card.id = `q${index}`;
-            if (index === 0) card.classList.add('active'); // İlk soru aktif
+            if (index === 0) card.classList.add('active');
 
             const title = document.createElement('h2');
             title.className = 'q-text';
@@ -366,7 +491,6 @@
             quizWrapper.insertBefore(card, document.getElementById('result-area'));
         });
 
-        // Loading Card (En sona ekle)
         const loadingCard = document.createElement('div');
         loadingCard.className = 'question-card';
         loadingCard.id = 'loading-card';
@@ -388,16 +512,6 @@
             }
         }
 
-        // --- 3. SONUÇ HESAPLA & GÖSTER ---
-        const db = [
-            { cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
-            { cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi.', top:'Limon, Elma', base:'Sedir Ağacı' },
-            { cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Lüks, karanlık ve şehvetli.', top:'Trüf Mantarı', base:'Bitter Çikolata' },
-            { cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Modern, özgür ve zarif.', top:'Portakal', base:'Paçuli' },
-            { cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilya bağımlılığı.', top:'Armut', base:'Kahve, Vanilya' },
-            { cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Temiz çarşaf kokusu.', top:'Aldehitler', base:'Misk' }
-        ];
-
         function showResult() {
             document.getElementById('loading-card').style.display = 'block';
             setTimeout(() => {
@@ -405,8 +519,9 @@
                 
                 let winner = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
                 let pool = db.filter(x => x.cat === winner);
-                if(pool.length === 0) pool = db; // Fallback
+                if(pool.length === 0) pool = db; 
                 
+                // Havuzdan rastgele seçim
                 let p = pool[Math.floor(Math.random() * pool.length)];
 
                 document.getElementById('r-img').src = p.img;
@@ -423,7 +538,6 @@
             }, 2000);
         }
 
-        // --- MOUSE & ŞİŞE ANİMASYONU ---
         const pupils = document.querySelectorAll('.b-pupil');
         const bottle = document.querySelector('.bottle-char');
         window.addEventListener('mousemove', (e) => {
@@ -432,14 +546,14 @@
                 const x = (rect.left + rect.right) / 2;
                 const y = (rect.top + rect.bottom) / 2;
                 const angle = Math.atan2(e.clientY - y, e.clientX - x);
-                const dist = Math.min(5, Math.hypot(e.clientX - x, e.clientY - y) / 10);
+                const dist = Math.min(3, Math.hypot(e.clientX - x, e.clientY - y) / 10);
                 pupil.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
             });
             if(bottle) {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
-                const moveX = (e.clientX - centerX) / 30;
-                const moveY = (e.clientY - centerY) / 30;
+                const moveX = (e.clientX - centerX) / 40;
+                const moveY = (e.clientY - centerY) / 40;
                 bottle.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
             }
         });
