@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Parfüm AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🌸 Sana En Uygun Parfüm</h1>
+  <p>Birkaç soruyla kokunu bulalım</p>
+
+  <label>Cinsiyet:</label>
+  <select id="gender">
+    <option value="kadın">Kadın</option>
+    <option value="erkek">Erkek</option>
+  </select>
+
+  <label>Mevsim:</label>
+  <select id="season">
+    <option value="yaz">Yaz</option>
+    <option value="kış">Kış</option>
+  </select>
+
+  <label>Favori koku:</label>
+  <select id="note">
+    <option value="vanilya">Vanilya</option>
+    <option value="ferah">Ferah</option>
+    <option value="odunsu">Odunsu</option>
+  </select>
+
+  <button onclick="runAI()">Parfümü Bul</button>
+
+  <div id="result"></div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
