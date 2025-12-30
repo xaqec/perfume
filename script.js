@@ -3,20 +3,26 @@ function runAI() {
   const season = document.getElementById("season").value;
   const note = document.getElementById("note").value;
 
-  const match = perfumes.filter(p =>
-    p.gender === gender &&
-    p.season === season &&
-    p.notes.includes(note)
-  );
+  const scored = perfumes.map(p => {
+    let score = 0;
+    if (p.gender === gender || p.gender === "unisex") score += 30;
+    if (p.season.includes(season)) score += 30;
+    if (p.notes.includes(note)) score += 40;
+    return { ...p, score };
+  });
 
-  const resultDiv = document.getElementById("result");
+  scored.sort((a, b) => b.score - a.score);
+  const best = scored[0];
 
-  if (match.length > 0) {
-    resultDiv.innerHTML = "✨ Sana uygun parfüm: <b>" + match[0].name + "</b>";
-  } else {
-    resultDiv.innerHTML = "😔 Tam eşleşme yok, benzer kokular öneriyoruz.";
-  }
+  document.getElementById("result").innerHTML = `
+    ✨ <b>${best.name}</b><br>
+    Uyumluluk: <b>%${best.score}</b><br>
+    ${note} notalarını sevdiğin ve ${season} için uygun olduğu için önerildi.
+  `;
+
+  renderPerfumes(scored);
 }
+
 
 const grid = document.getElementById("perfume-grid");
 
