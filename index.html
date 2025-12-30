@@ -8,97 +8,106 @@
     <style>
         /* --- TEMEL AYARLAR --- */
         :root {
-            --primary: #2d2d2d;
+            --primary: #fff; /* Yazılar artık beyaz ağırlıklı */
+            --dark-bg: #050505;
             --accent: #d4af37;
-            --glass: rgba(255, 255, 255, 0.90); /* Daha net görünüm */
-            --blur: blur(25px);
-            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            --glass-light: rgba(255, 255, 255, 0.95); /* Welcome kutusu için açık */
+            --glass-dark: rgba(20, 20, 20, 0.85);     /* Quiz kutusu için koyu */
+            --blur: blur(20px);
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background: #111; /* Resimler yüklenmezse koyu fon */
+            background: var(--dark-bg); /* Ana zemin simsiyah */
             overflow-x: hidden;
             color: var(--primary);
         }
 
-        /* --- KUSURSUZ ARKA PLAN (GRID MARQUEE) --- */
+        /* --- ARKA PLAN (SONSUZ VE DOLU DOLU) --- */
         .bg-container {
             position: fixed;
-            top: -100vh;      /* Ekranın çok üstünden başla */
-            left: -100vw;     /* Ekranın çok solundan başla */
-            width: 300vw;     /* Ekranın 3 katı genişlik */
-            height: 300vh;    /* Ekranın 3 katı yükseklik */
+            /* Ekranın tam ortasına sabitleyip oradan büyütüyoruz */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            width: 250vmax; /* Ekranın 2.5 katı büyüklük (vmax ile her yöne yeter) */
+            height: 250vmax;
             z-index: 0;
-            transform: rotate(-15deg); /* Açılı duruş */
             display: flex;
             flex-direction: column;
-            gap: 20px;        /* Satırlar arası boşluk */
+            justify-content: center;
+            gap: 20px; /* Satırlar arası boşluk */
             pointer-events: none;
-            opacity: 0.8;     /* Canlılık için opaklığı artırdım */
-            filter: brightness(0.9); /* Resimler çok patlamasın */
+            opacity: 0.35; /* Arka plan olduğu için hafif kısık */
         }
 
         .marquee-row {
             display: flex;
-            width: max-content; /* İçerik kadar genişle */
+            width: 100%;
+            justify-content: center; /* Ortala */
             gap: 20px;
         }
 
-        /* Animasyonlar: Sonsuz Döngü */
-        .marquee-row.left { animation: scrollLeft 60s linear infinite; }
-        .marquee-row.right { animation: scrollRight 70s linear infinite; }
+        /* Animasyonlar */
+        .marquee-row.left { animation: scrollLeft 80s linear infinite; }
+        .marquee-row.right { animation: scrollRight 90s linear infinite; }
 
         .m-img {
             width: 300px;
             height: 300px;
             background-size: cover;
             background-position: center;
-            border-radius: 20px;
+            border-radius: 15px;
             flex-shrink: 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            /* Siyah beyaz yapıp hover'da renkli de yapabiliriz ama renkli istedin */
+            filter: brightness(0.8) contrast(1.2); 
         }
 
-        /* Kusursuz geçiş için keyframe ayarları */
         @keyframes scrollLeft { 
-            0% { transform: translateX(0); } 
-            100% { transform: translateX(-50%); } /* Yarısına kadar kaydırıp başa sarar */
+            0% { transform: translateX(-20%); } 
+            100% { transform: translateX(20%); } 
         }
         @keyframes scrollRight { 
-            0% { transform: translateX(-50%); } 
-            100% { transform: translateX(0); } 
+            0% { transform: translateX(20%); } 
+            100% { transform: translateX(-20%); } 
         }
 
-        /* --- NAVİGASYON --- */
+        /* --- NAVİGASYON (DÜZELTİLDİ: BEYAZ YAZI) --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 25px;
+            padding: 30px;
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             z-index: 1000;
+            /* Menü arkasına hafif bir gölge ki resimler karışmasın */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
 
         nav a {
             text-decoration: none;
-            color: #000; /* Arka plan renkli olduğu için siyah */
+            color: #ffffff; /* BEYAZ YAZI */
             font-family: 'Syne', sans-serif;
             font-weight: 800;
             font-size: 14px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            text-shadow: 0 2px 10px rgba(0,0,0,1); /* Okunabilirlik için gölge */
             position: relative;
+            opacity: 0.9;
+            transition: 0.3s;
         }
-        nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 3px; background: var(--accent); transition: 0.3s; }
+        
+        nav a:hover { opacity: 1; color: var(--accent); }
+        nav a::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 0%; height: 2px; background: var(--accent); transition: 0.3s; }
         nav a:hover::after { width: 100%; }
 
-        /* --- MERKEZİ ALAN --- */
+        /* --- HERO SECTION (WELCOME KUTUSU) --- */
         .hero-section {
             height: 100vh;
             width: 100%;
@@ -109,23 +118,22 @@
             z-index: 10;
         }
 
+        /* Welcome Kutusu: Beyaz kalmasını istedin (Screenshot'taki gibi) */
         .glass-panel {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
+            background: #fff; /* Beyaz Zemin */
             padding: 50px 70px;
             border-radius: 60px;
             text-align: center;
-            border: 2px solid rgba(255,255,255,1);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8); /* Koyu gölge */
             max-width: 900px;
             width: 90%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
-        /* --- 3D PARFÜM KARAKTERİ (CSS DRAWING) --- */
+        /* --- 3D PARFÜM KARAKTERİ --- */
         .bottle-char-container {
             position: relative;
             width: 100px;
@@ -135,151 +143,78 @@
             perspective: 500px;
         }
 
-        .bottle-char {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transition: transform 0.1s ease-out; /* Mouse takibi için */
-        }
-
-        /* Şişe Kapak */
+        .bottle-char { width: 100%; height: 100%; position: relative; transition: transform 0.1s ease-out; }
+        
         .b-cap {
-            width: 40px;
-            height: 30px;
-            background: linear-gradient(45deg, #d4af37, #f3d467);
-            margin: 0 auto;
-            border-radius: 5px 5px 0 0;
+            width: 40px; height: 30px; margin: 0 auto; border-radius: 5px 5px 0 0;
+            background: linear-gradient(45deg, #FFD700, #FDB931);
             box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2);
         }
 
-        /* Şişe Gövde */
         .b-body {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(230,230,250,0.8));
+            width: 100px; height: 100px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
             border-radius: 20px;
-            border: 2px solid rgba(255,255,255,0.8);
-            box-shadow: 
-                0 15px 35px rgba(216, 27, 96, 0.2), /* Renkli gölge */
-                inset 0 0 20px rgba(255,255,255,0.9); /* Cam hissi */
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden;
+            border: 2px solid #eee;
         }
 
-        /* Sıvı Efekti */
         .b-liquid {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: rgba(255, 192, 203, 0.4);
-            z-index: 0;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: #ffc0cb; opacity: 0.6;
             border-radius: 0 0 18px 18px;
             animation: wave 4s infinite ease-in-out;
         }
 
-        /* Yüz */
-        .b-face {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .b-face { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; }
         .eyes-row { display: flex; gap: 12px; }
-        
-        .b-eye {
-            width: 18px;
-            height: 22px;
-            background: #333;
-            border-radius: 50%;
-            position: relative;
-        }
+        .b-eye { width: 14px; height: 18px; background: #222; border-radius: 50%; position: relative; }
+        .b-pupil { width: 5px; height: 5px; background: #fff; border-radius: 50%; position: absolute; top: 3px; left: 3px; }
+        .b-mouth { width: 16px; height: 8px; border-bottom: 3px solid #222; border-radius: 0 0 16px 16px; }
+        @keyframes wave { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg); } }
 
-        .b-pupil {
-            width: 6px;
-            height: 6px;
-            background: #fff;
-            border-radius: 50%;
-            position: absolute;
-            top: 4px;
-            left: 4px;
-        }
-
-        .b-mouth {
-            width: 20px;
-            height: 10px;
-            border-bottom: 3px solid #333;
-            border-radius: 0 0 20px 20px;
-        }
-
-        @keyframes wave {
-            0%, 100% { height: 40%; transform: rotate(0deg); }
-            50% { height: 45%; transform: rotate(2deg); }
-        }
-
-        /* --- HERO TEXT --- */
+        /* Yazılar (Welcome Kutusu İçi - Siyah Olmalı çünkü zemin beyaz) */
         .hero-title {
             font-family: 'Syne', sans-serif;
-            font-size: 7rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 0.9;
+            font-size: 6rem;
+            font-weight: 900;
+            color: #1a1a1a; /* Koyu renk yazı */
             margin: 0 0 20px 0;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
         }
 
         .search-platform {
-            background: #fff;
+            background: #f5f5f5;
             padding: 15px 30px;
             border-radius: 50px;
             border: 1px solid #ddd;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            width: 100%; max-width: 500px;
+            display: flex; align-items: center; gap: 15px; margin-bottom: 30px;
         }
-
         .search-icon { font-size: 20px; color: #999; }
         .typing-container {
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            color: #555;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid var(--accent);
-            width: 0;
-            animation: typing 3s steps(40, end) forwards, blink .75s step-end infinite;
+            font-family: 'Inter', sans-serif; font-size: 16px; color: #555;
+            white-space: nowrap; overflow: hidden; border-right: 2px solid var(--accent);
+            width: 0; animation: typing 3s steps(40, end) forwards, blink .75s step-end infinite;
         }
-
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
         .cta-btn {
-            background: var(--primary);
+            background: #1a1a1a;
             color: #fff;
-            padding: 20px 50px;
+            padding: 18px 50px;
             border-radius: 40px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
+            font-family: 'Syne', sans-serif; font-weight: 700; text-decoration: none;
             transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-        .cta-btn:hover { transform: translateY(-3px); background: #000; }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-        /* --- QUIZ --- */
+        /* --- QUIZ BÖLÜMÜ (KOYU TEMAYA GÜNCELLENDİ) --- */
         .quiz-section {
-            background: #fff;
+            background: transparent; /* Arka planı transparan yaptık ki resimler görünsün */
             min-height: 100vh;
             padding: 100px 20px;
             position: relative;
@@ -288,16 +223,37 @@
             justify-content: center;
         }
 
-        .quiz-wrapper { width: 100%; max-width: 1000px; text-align: center; }
+        /* Quiz Kutusu: KOYU RENK İSTEDİN */
+        .quiz-wrapper { 
+            width: 100%; 
+            max-width: 1000px; 
+            text-align: center;
+            background: var(--glass-dark); /* Koyu yarı saydam zemin */
+            backdrop-filter: blur(30px);
+            padding: 60px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
         .question-card { display: none; animation: fadeUp 0.6s ease; }
         .question-card.active { display: block; }
-        .q-text { font-family: 'Syne', sans-serif; font-size: 36px; margin-bottom: 40px; font-weight: 700; color: #333; }
+        
+        .q-text { 
+            font-family: 'Syne', sans-serif; 
+            font-size: 36px; 
+            margin-bottom: 40px; 
+            font-weight: 700; 
+            color: #fff; /* Beyaz yazı */
+        }
+
         .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         
         .opt-btn {
             padding: 25px;
-            background: #f9f9f9;
-            border: 2px solid #eee;
+            background: rgba(255,255,255,0.05); /* Çok hafif beyaz */
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ddd; /* Açık gri yazı */
             border-radius: 20px;
             text-align: left;
             font-size: 16px;
@@ -305,36 +261,43 @@
             transition: 0.3s;
             font-weight: 500;
         }
-        .opt-btn:hover { border-color: var(--accent); background: #fffcf5; transform: translateY(-5px); }
+        .opt-btn:hover { 
+            border-color: var(--accent); 
+            background: rgba(212, 175, 55, 0.2); /* Gold hover */
+            color: #fff;
+            transform: translateY(-5px); 
+        }
 
-        /* SONUÇ */
+        /* SONUÇ ALANI (KOYU TEMA) */
         #result-area {
             display: none;
-            background: #fff;
+            background: rgba(0,0,0,0.6);
             border-radius: 30px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
             overflow: hidden;
-            border: 1px solid #eee;
+            border: 1px solid rgba(255,255,255,0.1);
             flex-direction: row;
             text-align: left;
             margin-top: 50px;
         }
 
-        .res-img { flex: 1; background: #f4f4f4; display: flex; align-items: center; justify-content: center; padding: 40px; }
-        .res-img img { max-width: 100%; max-height: 400px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1)); transition: transform 0.5s; }
-        .res-img img:hover { transform: scale(1.1); }
-        .res-info { flex: 1.5; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .res-img { flex: 1; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; padding: 40px; }
+        .res-img img { max-width: 100%; max-height: 400px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); }
+        
+        .res-info { flex: 1.5; padding: 60px; display: flex; flex-direction: column; justify-content: center; color: #fff; }
         .res-brand { color: var(--accent); letter-spacing: 2px; font-weight: 700; font-size: 14px; text-transform: uppercase; }
-        .res-name { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; color: #222; }
-        .res-desc { color: #666; line-height: 1.6; margin-bottom: 30px; font-size: 17px; }
+        .res-name { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; color: #fff; }
+        .res-desc { color: #aaa; line-height: 1.6; margin-bottom: 30px; font-size: 17px; }
 
         @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
         @media(max-width: 768px) {
-            .hero-title { font-size: 4rem; }
+            .hero-title { font-size: 3.5rem; }
             #result-area { flex-direction: column; }
+            .bg-container { gap: 10px; }
+            .marquee-row { gap: 10px; }
+            .m-img { width: 150px; height: 150px; } /* Mobilde daha küçük ama çok resim */
             .glass-panel { padding: 40px 20px; }
-            .bg-container { width: 350vw; left: -125vw; }
+            .quiz-wrapper { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -349,58 +312,68 @@
 
     <div class="bg-container">
         <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400');"></div>
         </div>
-
         <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
         </div>
-
         <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400');"></div>
         </div>
-
         <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
         </div>
-
-        <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
+         <div class="marquee-row left">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
+        </div>
+        <div class="marquee-row right">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?w=400');"></div>
+        </div>
+         <div class="marquee-row left">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400');"></div>
+        </div>
+        <div class="marquee-row right">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
         </div>
     </div>
 
@@ -520,7 +493,7 @@
             <div class="question-card" id="loading">
                 <h2 class="q-text">Yapay Zeka Analiz Ediyor...</h2>
                 <div style="font-size:50px; animation:spin 1s infinite">✨</div>
-                <p style="margin-top:20px; color:#666;">Cevapların taranıyor...</p>
+                <p style="margin-top:20px; color:#aaa;">Cevapların taranıyor...</p>
             </div>
 
             <div id="result-area">
@@ -532,13 +505,13 @@
                     <h1 class="res-name" id="r-name">Parfüm Adı</h1>
                     <p class="res-desc" id="r-desc">Açıklama</p>
                     
-                    <strong style="display:block; margin-bottom:5px; color:#333; font-size:14px;">ÜST NOTALAR</strong>
-                    <p id="r-top" style="margin-bottom:20px; color:#777;">...</p>
+                    <strong style="display:block; margin-bottom:5px; color:#fff; font-size:14px;">ÜST NOTALAR</strong>
+                    <p id="r-top" style="margin-bottom:20px; color:#ccc;">...</p>
 
-                    <strong style="display:block; margin-bottom:5px; color:#333; font-size:14px;">DİP NOTALAR</strong>
-                    <p id="r-base" style="color:#777;">...</p>
+                    <strong style="display:block; margin-bottom:5px; color:#fff; font-size:14px;">DİP NOTALAR</strong>
+                    <p id="r-base" style="color:#ccc;">...</p>
 
-                    <button onclick="location.reload()" class="cta-btn" style="background:#222; margin-top:30px; font-size:14px;">TESTİ TEKRARLA</button>
+                    <button onclick="location.reload()" class="cta-btn" style="background:#fff; color:#000; margin-top:30px; font-size:14px;">TESTİ TEKRARLA</button>
                 </div>
             </div>
 
@@ -546,12 +519,11 @@
     </div>
 
     <script>
-        // --- 3D ŞİŞE & GÖZ TAKİBİ ---
+        // MOUSE TAKİBİ
         const pupils = document.querySelectorAll('.b-pupil');
         const bottle = document.querySelector('.bottle-char');
 
         window.addEventListener('mousemove', (e) => {
-            // Gözler için
             pupils.forEach(pupil => {
                 const rect = pupil.getBoundingClientRect();
                 const x = (rect.left + rect.right) / 2;
@@ -561,39 +533,29 @@
                 pupil.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
             });
 
-            // Şişe Gövdesi için 3D Dönüş
             if(bottle) {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
-                const moveX = (e.clientX - centerX) / 30; // Hassasiyet
+                const moveX = (e.clientX - centerX) / 30;
                 const moveY = (e.clientY - centerY) / 30;
                 bottle.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
             }
         });
 
-        // --- GENİŞLETİLMİŞ VERİTABANI (15 PARFÜM) ---
+        // PARFÜM VERİLERİ
         const db = [
-            // Romantik
             { id:1, cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı. Tam bir çiçek bahçesi.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
             { id:2, cat:'romantik', brand:'CHLOÉ', name:'Signature', img:'https://fimgs.net/mdimg/perfume/375x500.253.jpg', desc:'Pudralı gül kokusunun en modern ve zarif hali.', top:'Şakayık, Liçi', base:'Amber, Sedir' },
             { id:3, cat:'romantik', brand:'PARFUMS DE MARLY', name:'Delina', img:'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', desc:'Türk gülü ve ravent ile büyüleyici, prenseslere layık bir koku.', top:'Bergamot, Ravent', base:'Kaşmir Ağacı' },
-            
-            // Enerjik
             { id:4, cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi ve yaz neşesi.', top:'Limon, Elma', base:'Sedir Ağacı' },
             { id:5, cat:'enerjik', brand:'VERSACE', name:'Versense', img:'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', desc:'Akdeniz doğasının uyanışını simgeleyen, canlı ve yeşil bir koku.', top:'Bergamot, Yeşil Mandalina', base:'Zeytin Ağacı' },
             { id:6, cat:'enerjik', brand:'MOSCHINO', name:'Funny!', img:'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', desc:'Eğlenceli, kıpır kıpır ve turunçgil dolu bir gençlik iksiri.', top:'Acı Portakal, Frenk Üzümü', base:'Yeşil Çay' },
-
-            // Gizemli
             { id:7, cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Lüks, karanlık ve şehvetli. İddialı karakterlerin imzası.', top:'Trüf Mantarı, Ylang Ylang', base:'Bitter Çikolata, Paçuli' },
             { id:8, cat:'gizemli', brand:'DIOR', name:'Hypnotic Poison', img:'https://fimgs.net/mdimg/perfume/375x500.219.jpg', desc:'Yasak meyvenin cazibesi. Büyüleyici ve oryantal.', top:'Hindistan Cevizi, Mürdüm Eriği', base:'Vanilya, Badem' },
             { id:9, cat:'gizemli', brand:'MUGLER', name:'Alien', img:'https://fimgs.net/mdimg/perfume/375x500.707.jpg', desc:'Başka bir dünyadan gelmiş gibi. Güçlü yasemin ve amber patlaması.', top:'Yasemin', base:'Beyaz Amber' },
-
-            // Şık
             { id:10, cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Modern, özgür ve zarif kadının ikonik kokusu.', top:'Portakal, Mandalina', base:'Paçuli, Misk' },
             { id:11, cat:'sik', brand:'YSL', name:'Libre', img:'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', desc:'Özgürlüğün kokusu. Maskülen lavanta ile feminen portakal çiçeğinin dansı.', top:'Lavanta, Mandalina', base:'Vanilya, Ambergris' },
             { id:12, cat:'sik', brand:'GIORGIO ARMANI', name:'Sì', img:'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', desc:'İtalyan zarafeti. Hem tatlı hem de sofistike.', top:'Frenk Üzümü Nektarı', base:'Sarı Odun, Misk' },
-
-            // Gurme & Temiz (Ekstra)
             { id:13, cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilyanın tatlı bağımlılığı. Gece için mükemmel.', top:'Armut, Karabiber', base:'Vanilya, Kahve' },
             { id:14, cat:'gurme', brand:'KILIAN', name:'Love, Don\'t Be Shy', img:'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', desc:'Marshmallow ve portakal çiçeği ile en tatlı günah.', top:'Neroli, Bergamot', base:'Marshmallow, Karamel' },
             { id:15, cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Pazar sabahı temiz çarşafların verdiği o eşsiz huzur.', top:'Aldehitler, Armut', base:'Beyaz Misk' }
@@ -602,7 +564,7 @@
         let scores = { romantik:0, enerjik:0, gizemli:0, sik:0, gurme:0, temiz:0 };
 
         function nextQ(cat, cur, nxt) {
-            if(scores[cat] !== undefined) scores[cat] += 2; // Puan ağırlığını artırdım
+            if(scores[cat] !== undefined) scores[cat] += 2;
             
             document.getElementById(cur).style.display = 'none';
             document.getElementById(cur).classList.remove('active');
@@ -621,16 +583,9 @@
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 
-                // En yüksek skoru bul
                 let winner = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
-                
-                // O kategorideki parfümleri filtrele
                 let pool = db.filter(x => x.cat === winner);
-                
-                // Eğer havuz boşsa (yedek)
                 if(pool.length === 0) pool = db.filter(x => x.cat === 'sik');
-                
-                // Rastgele seç
                 let p = pool[Math.floor(Math.random()*pool.length)];
 
                 document.getElementById('r-img').src = p.img;
@@ -644,7 +599,7 @@
                 r.style.display = 'flex';
                 if(window.innerWidth <= 768) r.style.flexDirection = 'column';
 
-            }, 2500); // Biraz daha uzun analiz süresi (gerçekçilik için)
+            }, 2000);
         }
     </script>
 </body>
