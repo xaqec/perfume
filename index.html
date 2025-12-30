@@ -1,174 +1,82 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zarif Parfüm Önericisi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        /* TASARIM KISMI BAŞLANGICI */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #fdf2f5; /* Soft Pembe Arka Plan */
-            font-family: 'Lato', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #5c4033;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parfüm AI | Signature Scent Finder</title>
 
-        .kutu {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2); /* Hafif Gold Gölge */
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid #fff;
-        }
+  <link rel="stylesheet" href="style.css">
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            color: #d4af37; /* Gold Rengi Başlık */
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #888;
-            margin-bottom: 30px;
-        }
-
-        select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #ecccd8;
-            background-color: #fff9fb;
-            color: #555;
-            font-size: 16px;
-            margin-bottom: 20px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        button {
-            background: linear-gradient(45deg, #d4af37, #f3d467); /* Gold Gradyan Buton */
-            border: none;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
-            font-family: 'Playfair Display', serif;
-            letter-spacing: 1px;
-        }
-
-        button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        #sonucAlani {
-            margin-top: 30px;
-            display: none; /* Başlangıçta gizli */
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            animation: belirme 1s ease;
-        }
-
-        .parfum-adi {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            color: #bc8f8f; /* Koyu Gül Kurusu */
-            font-weight: bold;
-        }
-
-        .notalar {
-            font-size: 14px;
-            color: #999;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        @keyframes belirme {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* TASARIM KISMI BİTİŞİ */
-    </style>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-    <div class="kutu">
-        <h1>Ruhunu Yansıtan Koku</h1>
-        <p>Bugün kendini nasıl hissediyorsun?</p>
+  <!-- HERO -->
+  <header class="hero">
+    <h1>Find Your<br><span>Signature Scent</span></h1>
+    <p>Yapay zekâ destekli parfüm önerileriyle sana en uygun kokuyu keşfet</p>
+  </header>
 
-        <select id="duyguDurumu">
-            <option value="romantik">Romantik & Çiçeksi</option>
-            <option value="enerjik">Enerjik & Taze</option>
-            <option value="gizemli">Gizemli & Baharatlı</option>
-            <option value="sik">Şık & Odunsu</option>
+  <!-- AI QUIZ -->
+  <section class="quiz">
+    <h2>Koku Profilini Oluşturalım</h2>
+
+    <div class="quiz-grid">
+
+      <div class="quiz-item">
+        <label>Cinsiyet</label>
+        <select id="gender">
+          <option value="kadın">Kadın</option>
+          <option value="erkek">Erkek</option>
+          <option value="unisex">Unisex</option>
         </select>
+      </div>
 
-        <button onclick="parfumOner()">Bana Parfüm Öner</button>
+      <div class="quiz-item">
+        <label>Mevsim</label>
+        <select id="season">
+          <option value="ilkbahar">İlkbahar</option>
+          <option value="yaz">Yaz</option>
+          <option value="sonbahar">Sonbahar</option>
+          <option value="kış">Kış</option>
+        </select>
+      </div>
 
-        <div id="sonucAlani">
-            <div class="parfum-adi" id="parfumIsmi"></div>
-            <div class="notalar" id="parfumDetay"></div>
-        </div>
+      <div class="quiz-item">
+        <label>Favori Nota</label>
+        <select id="note">
+          <option value="vanilya">Vanilya</option>
+          <option value="çiçeksi">Çiçeksi</option>
+          <option value="ferah">Ferah</option>
+          <option value="odunsu">Odunsu</option>
+          <option value="baharatlı">Baharatlı</option>
+        </select>
+      </div>
+
     </div>
 
-    <script>
-        // KODLAMA (BEYİN) KISMI
-        
-        // Buraya istediğin parfümleri ekleyebilirsin
-        const parfumler = {
-            'romantik': [
-                {ad: "Gucci Bloom", detay: "Yasemin, Sümbülteber ve Rangoon Sarmaşığı"},
-                {ad: "Chloé Signature", detay: "Şakayık, Gül, Bal ve Sedir Ağacı"},
-                {ad: "Dior Miss Dior", detay: "İtalyan Mandalinası ve Gül Özleri"}
-            ],
-            'enerjik': [
-                {ad: "Dolce & Gabbana Light Blue", detay: "Sicilya Limonu, Elma ve Sedir"},
-                {ad: "Chanel Chance Eau Tendre", detay: "Greyfurt, Ayva ve Yasemin"},
-                {ad: "Jo Malone Wood Sage & Sea Salt", detay: "Deniz Tuzu ve Adaçayı"}
-            ],
-            'gizemli': [
-                {ad: "YSL Black Opium", detay: "Siyah Kahve, Vanilya ve Beyaz Çiçekler"},
-                {ad: "Tom Ford Black Orchid", detay: "Siyah Orkide, Baharatlar ve Tütsü"},
-                {ad: "Dior Hypnotic Poison", detay: "Badem, Yasemin ve Vanilya"}
-            ],
-            'sik': [
-                {ad: "Chanel Coco Mademoiselle", detay: "Portakal, Paçuli ve Türk Gülü"},
-                {ad: "Giorgio Armani Si", detay: "Frenk Üzümü, Gül ve Odunsu Notalar"},
-                {ad: "Narciso Rodriguez For Her", detay: "Misk, Gül ve Şeftali"}
-            ]
-        };
+    <button class="primary-btn" onclick="runAI()">Parfümümü Bul</button>
 
-        function parfumOner() {
-            // Seçilen duyguyu al
-            const secim = document.getElementById('duyguDurumu').value;
-            
-            // O duyguya uygun listeden rastgele bir parfüm seç
-            const liste = parfumler[secim];
-            const rastgeleSayi = Math.floor(Math.random() * liste.length);
-            const secilenParfum = liste[rastgeleSayi];
+    <div id="result" class="result-box"></div>
+  </section>
 
-            // Ekrana yazdır
-            document.getElementById('parfumIsmi').innerText = secilenParfum.ad;
-            document.getElementById('parfumDetay').innerText = secilenParfum.detay;
-            
-            // Sonuç kutusunu görünür yap
-            document.getElementById('sonucAlani').style.display = "block";
-        }
-    </script>
+  <!-- PERFUME LIBRARY -->
+  <section class="library">
+    <h2>Parfüm Kütüphanesi</h2>
+    <p class="subtitle">Seçilmiş ikonik kokular</p>
+
+    <div id="perfume-grid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Parfüm AI — All rights reserved</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
