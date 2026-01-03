@@ -1,1 +1,547 @@
+/* data.js */
 
+// --- 1. OYUN HİKAYESİ VE SORULAR (20 ADIM) ---
+const STORY_DATA = {
+    female: [
+        {
+            text: "Gözlerini araladığında kendini hiç bilmediğin, sisli bir ormanın kıyısında buluyorsun. Hava alacakaranlık. İlk hissin ne?",
+            bg: "forest",
+            opts: [
+                { t: "Korku değil, tuhaf bir huzur ve merak.", c: "gizemli" },
+                { t: "Üşüdüm, hemen sığınacak bir yer bulmalıyım.", c: "gurme" },
+                { t: "Derin bir nefes alıp ormanın kokusunu içime çekerim.", c: "temiz" },
+                { t: "Macera başlıyor! İlerlemeliyim.", c: "enerjik" }
+            ]
+        },
+        {
+            text: "Ormanın içinde ilerlerken karşına terk edilmiş gibi duran, sarmaşıklarla kaplı devasa bir malikane çıkıyor. Kapısı...",
+            bg: "mansion",
+            opts: [
+                { t: "Ağır, oymalı, koyu ceviz rengi bir kapı.", c: "sik" },
+                { t: "Beyaz, zarif ve altın detaylı.", c: "romantik" },
+                { t: "Camdan yapılmış, içerisi hafifçe görünüyor.", c: "temiz" },
+                { t: "Üzerinde güller ve dikenler sarılı.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "İçeri giriyorsun. Büyük salonda bir balo varmış ama kimse yok. Havada asılı kalan müzik sence hangisi?",
+            bg: "hall",
+            opts: [
+                { t: "Hüzünlü bir piyano sonatı.", c: "romantik" },
+                { t: "Derin ve titreşimli bir çello.", c: "gizemli" },
+                { t: "Canlı bir caz orkestrası.", c: "enerjik" },
+                { t: "Klasik bir vals.", c: "sik" }
+            ]
+        },
+        {
+            text: "Masada dört farklı içecek kadehi duruyor. Susuzluğunu gidermek için birini seçmek zorundasın.",
+            bg: "table",
+            opts: [
+                { t: "Koyu renkli, yoğun kıvamlı sıcak çikolata.", c: "gurme" },
+                { t: "Buzlu, nane yapraklı kristal bir su.", c: "temiz" },
+                { t: "Yıllanmış, yakut rengi bir şarap.", c: "sik" },
+                { t: "Egzotik meyvelerle dolu bir kokteyl.", c: "enerjik" }
+            ]
+        },
+        {
+            text: "Merdivenlerden yukarı çıkarken duvarda bir tablo görüyorsun. Tabloda ne var?",
+            bg: "stairs",
+            opts: [
+                { t: "Fırtınalı bir deniz.", c: "enerjik" },
+                { t: "Soyut, renkli geometrik şekiller.", c: "sik" },
+                { t: "Çiçeklerle dolu bir bahçede bir kadın.", c: "romantik" },
+                { t: "Karanlık bir ormanda parlayan gözler.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Bir yatak odasına girdin. Aynanın önünde duran mücevher kutusunu açtın. İçinden ne çıktı?",
+            bg: "room",
+            opts: [
+                { t: "Tektaş bir pırlanta kolye.", c: "sik" },
+                { t: "Eski, gümüş bir madalyon.", c: "gizemli" },
+                { t: "Renkli boncuklardan yapılmış bir bileklik.", c: "enerjik" },
+                { t: "Pembe kuvars bir yüzük.", c: "romantik" }
+            ]
+        },
+        {
+            text: "Pencereyi açtın. Dışarıdan gelen rüzgar sana ne fısıldıyor?",
+            bg: "window",
+            opts: [
+                { t: "Geçmişin sırlarını.", c: "gizemli" },
+                { t: "Geleceğin başarılarını.", c: "sik" },
+                { t: "Özgürlüğün çağrısını.", c: "enerjik" },
+                { t: "Sıcak bir kucaklamayı.", c: "gurme" }
+            ]
+        },
+        {
+            text: "Odada bir gardırop var. Kapağını açtığında en çok dikkatini çeken kumaş hangisi?",
+            bg: "closet",
+            opts: [
+                { t: "Yumuşacık kaşmir.", c: "gurme" },
+                { t: "Serin, kaygan saten.", c: "sik" },
+                { t: "Doğal keten ve pamuk.", c: "temiz" },
+                { t: "Siyah deri ve dantel.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Malikanenin bahçesine çıkıyorsun. Hangi çiçeği koparıp koklamak istersin?",
+            bg: "garden",
+            opts: [
+                { t: "Kadifemsi kırmızı bir gül.", c: "romantik" },
+                { t: "Beyaz, narin bir yasemin.", c: "temiz" },
+                { t: "Vahşi ve dikenli bir orkide.", c: "gizemli" },
+                { t: "Tatlı kokulu bir hanımeli.", c: "gurme" }
+            ]
+        },
+        {
+            text: "Bahçede bir labirent var. Yolunu nasıl bulursun?",
+            bg: "maze",
+            opts: [
+                { t: "İçgüdülerime güvenirim.", c: "gizemli" },
+                { t: "Mantığımı kullanıp harita çizerim.", c: "sik" },
+                { t: "Koşarak çıkışı ararım.", c: "enerjik" },
+                { t: "Gökyüzüne ve yıldızlara bakarım.", c: "romantik" }
+            ]
+        },
+        {
+            text: "Akşam oldu. Gökyüzü nasıl görünüyor?",
+            bg: "sky",
+            opts: [
+                { t: "Zifiri karanlık, sadece ay var.", c: "gizemli" },
+                { t: "Yıldızlarla dolu, pırıl pırıl.", c: "romantik" },
+                { t: "Şehrin ışıkları yansıyor.", c: "sik" },
+                { t: "Fırtına öncesi mor bulutlar.", c: "enerjik" }
+            ]
+        },
+        {
+            text: "Aniden bir yağmur başlıyor. Bu yağmur sana ne hissettirdi?",
+            bg: "rain",
+            opts: [
+                { t: "Arınma ve tazelenme.", c: "temiz" },
+                { t: "Melankoli ve romantizm.", c: "romantik" },
+                { t: "Enerji ve doğanın gücü.", c: "enerjik" },
+                { t: "Sığınacak sıcak bir yer arayışı.", c: "gurme" }
+            ]
+        },
+        {
+            text: "Sığınmak için bir kütüphaneye girdin. Hangi kitabı eline alırsın?",
+            bg: "library",
+            opts: [
+                { t: "Eski, deri ciltli bir büyü kitabı.", c: "gizemli" },
+                { t: "Modern bir moda dergisi.", c: "sik" },
+                { t: "Klasik bir aşk romanı.", c: "romantik" },
+                { t: "Yemek tarifleri kitabı.", c: "gurme" }
+            ]
+        },
+        {
+            text: "Kütüphanede bir şömine yanıyor. Ateşe ne atarsın?",
+            bg: "fire",
+            opts: [
+                { t: "Kuru odunlar (Çıtırtı sesi için).", c: "temiz" },
+                { t: "Kurutulmuş portakal kabukları (Koku için).", c: "enerjik" },
+                { t: "Eski bir mektup (Gizem için).", c: "gizemli" },
+                { t: "Tarçın çubukları (Sıcaklık için).", c: "gurme" }
+            ]
+        },
+        {
+            text: "Şömine başında uyuyakaldın. Rüyanda ne gördün?",
+            bg: "dream",
+            opts: [
+                { t: "Bulutların üzerinde uçuyordum.", c: "temiz" },
+                { t: "Büyük bir sahnede alkışlanıyordum.", c: "sik" },
+                { t: "Şekerden yapılmış bir evdeydim.", c: "gurme" },
+                { t: "Bilinmez bir labirentteydim.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Sabah oldu. Kahvaltıda ne istersin?",
+            bg: "breakfast",
+            opts: [
+                { t: "Taze sıkılmış portakal suyu ve meyve.", c: "enerjik" },
+                { t: "Kruvasan ve kahve.", c: "sik" },
+                { t: "Pankek ve bol şurup.", c: "gurme" },
+                { t: "Sadece bitki çayı.", c: "temiz" }
+            ]
+        },
+        {
+            text: "Malikaneden ayrılma vakti. Yanına hatıra olarak ne alırsın?",
+            bg: "leaving",
+            opts: [
+                { t: "Bahçeden bir taş.", c: "temiz" },
+                { t: "Kütüphaneden bir tüy kalem.", c: "sik" },
+                { t: "Mutfaktan bir baharat şişesi.", c: "gurme" },
+                { t: "Hiçbir şey, anılar yeterli.", c: "romantik" }
+            ]
+        },
+        {
+            text: "Dönüş yolunda nasıl bir müzik dinlersin?",
+            bg: "car",
+            opts: [
+                { t: "Son ses pop müzik.", c: "enerjik" },
+                { t: "Sakinleştirici lo-fi.", c: "temiz" },
+                { t: "Opera veya klasik.", c: "sik" },
+                { t: "Film müzikleri.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Eve vardın. İlk yaptığın şey ne?",
+            bg: "home",
+            opts: [
+                { t: "Sıcak bir duş almak.", c: "temiz" },
+                { t: "Sevdiğim birini aramak.", c: "romantik" },
+                { t: "Yemek sipariş etmek.", c: "gurme" },
+                { t: "Çalışmaya başlamak.", c: "sik" }
+            ]
+        },
+        {
+            text: "Son soru: Ruhunun rengi ne?",
+            bg: "soul",
+            opts: [
+                { t: "Altın Sarısı (Parlak ve Lüks).", c: "sik" },
+                { t: "Derin Mor (Gizemli ve Asil).", c: "gizemli" },
+                { t: "Bebek Mavisi (Huzurlu ve Temiz).", c: "temiz" },
+                { t: "Ateş Kırmızısı (Tutkulu ve Canlı).", c: "romantik" }
+            ]
+        }
+    ],
+    male: [
+        {
+            text: "Gece yarısı şifreli bir telefon aldın. Operasyon başlıyor. İlk durağın neresi?",
+            bg: "forest",
+            opts: [
+                { t: "Londra'nın sisli arka sokakları.", c: "sik" },
+                { t: "Amazon ormanlarının derinlikleri.", c: "maskulen" },
+                { t: "Miami'de neon ışıklı bir gece kulübü.", c: "enerjik" },
+                { t: "İstanbul'un tarihi yeraltı sarnıçları.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Görev yerine gitmek için garajına indin. Hangi aracı seçiyorsun?",
+            bg: "mansion",
+            opts: [
+                { t: "Mat siyah, zırhlı bir SUV.", c: "maskulen" },
+                { t: "Klasik, gümüş renkli bir Aston Martin.", c: "centilmen" },
+                { t: "Kırmızı, üstü açık bir spor araba.", c: "enerjik" },
+                { t: "Siyah camlı, şoförlü bir limuzin.", c: "sik" }
+            ]
+        },
+        {
+            text: "İçeri sızmak için kılık değiştirmen gerekiyor. Rolün ne?",
+            bg: "hall",
+            opts: [
+                { t: "Zengin bir yatırımcı CEO.", c: "sik" },
+                { t: "Gizemli bir sanat koleksiyoneri.", c: "gizemli" },
+                { t: "Karizmatik bir diplomat.", c: "centilmen" },
+                { t: "Tehlikeli bir koruma.", c: "maskulen" }
+            ]
+        },
+        {
+            text: "Hedefin bulunduğu bara oturdun. Barmene ne sipariş edersin?",
+            bg: "table",
+            opts: [
+                { t: "Sert bir viski, buzsuz.", c: "maskulen" },
+                { t: "İçinde ne olduğunu kimsenin bilmediği özel bir karışım.", c: "gizemli" },
+                { t: "Buz gibi, tazeleyici bir Gin Tonic.", c: "enerjik" },
+                { t: "Yıllanmış bir konyak.", c: "centilmen" }
+            ]
+        },
+        {
+            text: "Yan masada oturan kişinin dikkatini çekmek istiyorsun. Hangi aksesuarını kullanırsın?",
+            bg: "stairs",
+            opts: [
+                { t: "Pahalı, İsviçre yapımı saatim.", c: "sik" },
+                { t: "Eskitilmiş deri bilekliğim.", c: "maskulen" },
+                { t: "Siyah güneş gözlüklerim.", c: "gizemli" },
+                { t: "Kol düğmelerim.", c: "centilmen" }
+            ]
+        },
+        {
+            text: "Müzik değişti. Ortama hakim olan ritim ne?",
+            bg: "room",
+            opts: [
+                { t: "Ağır ve sert bir Rock parçası.", c: "maskulen" },
+                { t: "Sofistike bir Caz.", c: "sik" },
+                { t: "Hipnotize edici Deep House.", c: "gizemli" },
+                { t: "Zarif bir Klasik müzik.", c: "centilmen" }
+            ]
+        },
+        {
+            text: "Bir anda elektrikler kesildi. İlk tepkin ne?",
+            bg: "window",
+            opts: [
+                { t: "Hemen savunma pozisyonuna geçerim.", c: "maskulen" },
+                { t: "Sakinliğimi korur, etrafı izlerim.", c: "centilmen" },
+                { t: "Fırsattan istifade kalabalığa karışırım.", c: "enerjik" },
+                { t: "Gölgeye çekilir, görünmez olurum.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Havada bir koku var. Bu koku sana neyi hatırlatıyor?",
+            bg: "closet",
+            opts: [
+                { t: "Deri koltuklar ve puro dumanı.", c: "maskulen" },
+                { t: "Okyanusun tuzlu meltemi.", c: "enerjik" },
+                { t: "Eski bir tapınaktaki tütsüler.", c: "gizemli" },
+                { t: "Taze ütülenmiş gömlek ve sabun.", c: "sik" }
+            ]
+        },
+        {
+            text: "Görev tamamlandı. Olay yerinden nasıl ayrılıyorsun?",
+            bg: "garden",
+            opts: [
+                { t: "Kimse fark etmeden, sessizce.", c: "sik" },
+                { t: "Büyük bir patlama ve kaos yaratarak.", c: "enerjik" },
+                { t: "Arkamda sadece bir duman bulutu bırakarak.", c: "gizemli" },
+                { t: "Ana kapıdan, kendimden emin adımlarla.", c: "centilmen" }
+            ]
+        },
+        {
+            text: "Eve döndün. Rahatlamak için hangi hobine vakit ayırırsın?",
+            bg: "maze",
+            opts: [
+                { t: "Garajda arabamı tamir ederim.", c: "maskulen" },
+                { t: "Borsa ve iş haberlerini takip ederim.", c: "sik" },
+                { t: "Spor salonuna giderim.", c: "enerjik" },
+                { t: "Karanlık odada fotoğraf banyo ederim.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Bir sonraki tatilin için nereyi seçersin?",
+            bg: "sky",
+            opts: [
+                { t: "Issız bir dağda kamp.", c: "maskulen" },
+                { t: "Dubai'de 7 yıldızlı bir otel.", c: "sik" },
+                { t: "Avustralya'da sörf.", c: "enerjik" },
+                { t: "Mısır piramitlerinde tarih turu.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Gardırobunun vazgeçilmez parçası nedir?",
+            bg: "rain",
+            opts: [
+                { t: "Eskitilmiş deri ceket.", c: "maskulen" },
+                { t: "İtalyan kesim takım elbise.", c: "sik" },
+                { t: "Rahat beyaz T-shirt.", c: "enerjik" },
+                { t: "Uzun, siyah bir palto.", c: "centilmen" }
+            ]
+        },
+        {
+            text: "En sevdiğin element hangisi?",
+            bg: "library",
+            opts: [
+                { t: "Ateş (Yakıcı ve Güçlü).", c: "maskulen" },
+                { t: "Metal (Parlak ve Keskin).", c: "sik" },
+                { t: "Hava (Hızlı ve Özgür).", c: "enerjik" },
+                { t: "Su (Derin ve Sessiz).", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Sana en çok ilham veren saat dilimi?",
+            bg: "fire",
+            opts: [
+                { t: "Güneşin doğuşu.", c: "enerjik" },
+                { t: "Öğle vakti, işlerin en yoğun olduğu an.", c: "sik" },
+                { t: "Gün batımı.", c: "centilmen" },
+                { t: "Gece yarısı.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Bir tartışmada tavrın ne olur?",
+            bg: "dream",
+            opts: [
+                { t: "Sesimi yükseltir, baskın çıkarım.", c: "maskulen" },
+                { t: "Diplomatik ve kibar konuşurum.", c: "centilmen" },
+                { t: "Mantıklı argümanlarla ikna ederim.", c: "sik" },
+                { t: "Sessiz kalır, karşımdakini analiz ederim.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Hayatındaki en büyük motivasyon?",
+            bg: "breakfast",
+            opts: [
+                { t: "Güç ve otorite.", c: "maskulen" },
+                { t: "Başarı ve zenginlik.", c: "sik" },
+                { t: "Adrenalin ve eğlence.", c: "enerjik" },
+                { t: "Bilgi ve keşif.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "İdeal evcil hayvanın?",
+            bg: "leaving",
+            opts: [
+                { t: "Doberman veya Pitbull.", c: "maskulen" },
+                { t: "Safkan bir yarış atı.", c: "centilmen" },
+                { t: "Evde beslenen bir kaplan.", c: "sik" },
+                { t: "Siyah bir kedi veya baykuş.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Favori rengin?",
+            bg: "car",
+            opts: [
+                { t: "Mat Siyah.", c: "maskulen" },
+                { t: "Lacivert.", c: "sik" },
+                { t: "Parlak Turuncu.", c: "enerjik" },
+                { t: "Koyu Gri.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "İdeal evin nasıl olmalı?",
+            bg: "home",
+            opts: [
+                { t: "Orman içinde bir kütük ev.", c: "maskulen" },
+                { t: "Şehir merkezinde cam kaplı penthouse.", c: "sik" },
+                { t: "Deniz kenarında modern bir villa.", c: "enerjik" },
+                { t: "Tarihi ve gizli geçitleri olan bir konak.", c: "gizemli" }
+            ]
+        },
+        {
+            text: "Son soru: İnsanlar seni tek kelimeyle nasıl anlatsın?",
+            bg: "soul",
+            opts: [
+                { t: "Korkusuz.", c: "maskulen" },
+                { t: "Kaliteli.", c: "sik" },
+                { t: "Eğlenceli.", c: "enerjik" },
+                { t: "Bilinmez.", c: "gizemli" }
+            ]
+        }
+    ]
+};
+
+// --- 2. GELİŞMİŞ DEVASA VERİTABANI ---
+const PERFUME_DB = {
+    female: [
+        // --- ROMANTİK (Çiçeksi, Gül, Zarif) ---
+        { cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Ruhunuzu çiçek bahçesine götüren, son derece feminen bir imza.', top:'Rangoon Sarmaşığı', heart:'Yasemin Tomurcuğu', base:'Sümbülteber' },
+        { cat:'romantik', brand:'PARFUMS DE MARLY', name:'Delina', img:'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', desc:'Türk gülü ve ravent ile büyüleyici, prenseslere layık bir koku.', top:'Bergamot, Ravent', heart:'Türk Gülü', base:'Kaşmir Ağacı' },
+        { cat:'romantik', brand:'CHLOÉ', name:'Signature', img:'https://fimgs.net/mdimg/perfume/375x500.253.jpg', desc:'Pudralı gül kokusunun en modern ve zarif hali.', top:'Şakayık, Liçi', heart:'Gül, Manolya', base:'Amber, Sedir' },
+        { cat:'romantik', brand:'DIOR', name:'Miss Dior Blooming Bouquet', img:'https://fimgs.net/mdimg/perfume/375x500.23281.jpg', desc:'Bir bahar buketinin taze ve ışıltılı dokunuşu.', top:'Sicilya Mandalinası', heart:'Pembe Şakayık', base:'Beyaz Misk' },
+        { cat:'romantik', brand:'LANCÔME', name:'Idôle', img:'https://fimgs.net/mdimg/perfume/375x500.55795.jpg', desc:'Geleceğin kadınları için temiz, ferah ve ışıltılı bir gül.', top:'Armut, Bergamot', heart:'Türk Gülü, Yasemin', base:'Beyaz Misk, Vanilya' },
+        { cat:'romantik', brand:'GIVENCHY', name:'Irresistible', img:'https://fimgs.net/mdimg/perfume/375x500.60872.jpg', desc:'Dans eden güllerin ve sarışın ahşabın karşı konulamaz enerjisi.', top:'Armut, Amber', heart:'Gül, İris', base:'Misk, Sedir' },
+        { cat:'romantik', brand:'MARC JACOBS', name:'Daisy', img:'https://fimgs.net/mdimg/perfume/375x500.1361.jpg', desc:'Güneşli, özgür ve masum papatyaların kokusu.', top:'Menekşe Yaprağı', heart:'Menekşe, Yasemin', base:'Misk, Vanilya' },
+        { cat:'romantik', brand:'VIKTOR&ROLF', name:'Flowerbomb', img:'https://fimgs.net/mdimg/perfume/375x500.255.jpg', desc:'Binlerce çiçeğin patlamasıyla oluşan büyüleyici bir rüya.', top:'Çay, Bergamot', heart:'Orkide, Gül', base:'Paçuli' },
+        { cat:'romantik', brand:'AERIN', name:'Rose de Grasse', img:'https://fimgs.net/mdimg/perfume/375x500.29707.jpg', desc:'Grasse güllerinin en saf ve lüks hali.', top:'Amber', heart:'Centifolia Gülü', base:'Misk' },
+        { cat:'romantik', brand:'JO MALONE', name:'Red Roses', img:'https://fimgs.net/mdimg/perfume/375x500.2285.jpg', desc:'Dünyanın en güzel yedi gülünün romantik karışımı.', top:'Limon', heart:'Kırmızı Güller', base:'Petek Bal' },
+
+        // --- ŞIK (Lüks, Odunsu, Ofis, Plaza) ---
+        { cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Özgür ruhlu ve zarif kadınların vazgeçilmez modern klasiği.', top:'Portakal', heart:'Türk Gülü', base:'Paçuli, Misk' },
+        { cat:'sik', brand:'YSL', name:'Libre', img:'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', desc:'Özgürlüğün kokusu. Maskülen lavanta ile feminen portakal çiçeği.', top:'Mandalina, Lavanta', heart:'Portakal Çiçeği', base:'Vanilya, Sedir' },
+        { cat:'sik', brand:'GIORGIO ARMANI', name:'Sì', img:'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', desc:'İtalyan zarafeti. Hem tatlı hem de sofistike bir duruş.', top:'Frenk Üzümü', heart:'Frezya, Gül', base:'Vanilya, Paçuli' },
+        { cat:'sik', brand:'VALENTINO', name:'Voce Viva', img:'https://fimgs.net/mdimg/perfume/375x500.62776.jpg', desc:'Sesim, gücüm. Modern kadının ışıltılı ve güçlü yanı.', top:'Mandalina, Bergamot', heart:'Portakal Çiçeği', base:'Kristal Yosun, Vanilya' },
+        { cat:'sik', brand:'BOTTEGA VENETA', name:'Bottega Veneta', img:'https://fimgs.net/mdimg/perfume/375x500.12863.jpg', desc:'Venedik kırsalının ve lüks deri işçiliğinin kokusu.', top:'Bergamot, Biber', heart:'Yasemin', base:'Deri, Meşe Yosunu' },
+        { cat:'sik', brand:'BURBERRY', name:'Her', img:'https://fimgs.net/mdimg/perfume/375x500.51860.jpg', desc:'Londra\'nın cesur ve maceracı ruhunu yansıtan meyvemsi bir imza.', top:'Çilek, Ahududu', heart:'Yasemin', base:'Misk, Amber' },
+        { cat:'sik', brand:'HERMÈS', name:'Twilly d\'Hermès', img:'https://fimgs.net/mdimg/perfume/375x500.46145.jpg', desc:'Genç, baharatlı ve cüretkar bir zarafet.', top:'Zencefil', heart:'Sümbülteber', base:'Sandal Ağacı' },
+        { cat:'sik', brand:'CARTIER', name:'La Panthere', img:'https://fimgs.net/mdimg/perfume/375x500.23295.jpg', desc:'Vahşi ama bir o kadar zarif. İkonik panterin izinde.', top:'Kurutulmuş Meyve', heart:'Gardenya', base:'Misk, Meşe Yosunu' },
+        { cat:'sik', brand:'TIFFANY & CO', name:'Tiffany & Co', img:'https://fimgs.net/mdimg/perfume/375x500.46237.jpg', desc:'Pırlanta gibi ışıltılı, saf ve lüks bir dokunuş.', top:'Mandalina', heart:'İris Çiçeği', base:'Paçuli, Misk' },
+        { cat:'sik', brand:'PRADA', name:'Infusion d\'Iris', img:'https://fimgs.net/mdimg/perfume/375x500.1795.jpg', desc:'Zamansız, temiz ve pudralı bir zarafet simgesi.', top:'Portakal Çiçeği', heart:'İris', base:'Tütsü, Sedir' },
+
+        // --- ENERJİK (Narenciye, Taze, Yaz) ---
+        { cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Akdeniz\'in ferahlatıcı esintisi ve Sicilya yazlarının neşesi.', top:'Sicilya Limonu', heart:'Bambu, Yasemin', base:'Sedir Ağacı' },
+        { cat:'enerjik', brand:'VERSACE', name:'Versense', img:'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', desc:'Akdeniz doğasının uyanışını simgeleyen, canlı ve yeşil bir koku.', top:'Bergamot, İncir', heart:'Kakule, Yasemin', base:'Zeytin Ağacı, Misk' },
+        { cat:'enerjik', brand:'MOSCHINO', name:'Funny!', img:'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', desc:'Eğlenceli, kıpır kıpır ve turunçgil dolu bir gençlik iksiri.', top:'Acı Portakal', heart:'Yeşil Çay, Yasemin', base:'Sedir, Amber' },
+        { cat:'enerjik', brand:'CHANEL', name:'Chance Eau Fraiche', img:'https://fimgs.net/mdimg/perfume/375x500.1483.jpg', desc:'Fırsatları yakalayanlar için taze, ışıltılı ve enerjik.', top:'Limon, Sedir', heart:'Pembe Biber', base:'Tik Ağacı, İris' },
+        { cat:'enerjik', brand:'HERMES', name:'Un Jardin Sur Le Nil', img:'https://fimgs.net/mdimg/perfume/375x500.18.jpg', desc:'Nil nehrinde bir gezi. Yeşil mango ve lotusun ferahlığı.', top:'Yeşil Mango', heart:'Lotus, Sümbül', base:'Tütsü, Çınar' },
+        { cat:'enerjik', brand:'ACQUA DI PARMA', name:'Blu Mediterraneo', img:'https://fimgs.net/mdimg/perfume/375x500.1685.jpg', desc:'Capri adasının portakal kokulu rüzgarları.', top:'Portakal, Mandalina', heart:'Kakule', base:'Karamel, Misk' },
+        { cat:'enerjik', brand:'JO MALONE', name:'Lime Basil & Mandarin', img:'https://fimgs.net/mdimg/perfume/375x500.2279.jpg', desc:'Mandalina, fesleğen ve beyaz kekiğin modern klasiği.', top:'Mandalina', heart:'Fesleğen', base:'Amber' },
+        { cat:'enerjik', brand:'TOM FORD', name:'Neroli Portofino', img:'https://fimgs.net/mdimg/perfume/375x500.12192.jpg', desc:'İtalyan rivierasının serin suları ve lüks narenciyeler.', top:'Bergamot, Limon', heart:'Portakal Çiçeği', base:'Amber' },
+        { cat:'enerjik', brand:'DKNY', name:'Be Delicious', img:'https://fimgs.net/mdimg/perfume/375x500.498.jpg', desc:'New York enerjisi ve yeşil elmanın gevrekliği.', top:'Salatalık, Greyfurt', heart:'Yeşil Elma', base:'Sandal Ağacı' },
+        { cat:'enerjik', brand:'CLINIQUE', name:'Happy', img:'https://fimgs.net/mdimg/perfume/375x500.374.jpg', desc:'Mutluluğun şişelenmiş hali. Narenciye ve çiçekler.', top:'Portakal, Greyfurt', heart:'Mimoza', base:'Misk' },
+
+        // --- GİZEMLİ (Karanlık, Baharatlı, Seksi) ---
+        { cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Karanlık, lüks ve baştan çıkarıcı. Modern bir klasik.', top:'Trüf, Ylang Ylang', heart:'Siyah Orkide', base:'Bitter Çikolata, Paçuli' },
+        { cat:'gizemli', brand:'DIOR', name:'Hypnotic Poison', img:'https://fimgs.net/mdimg/perfume/375x500.219.jpg', desc:'Yasak meyvenin cazibesi. Büyüleyici bir vanilya rüyası.', top:'Kayısı, Erik', heart:'Sümbülteber', base:'Vanilya, Badem' },
+        { cat:'gizemli', brand:'MUGLER', name:'Alien', img:'https://fimgs.net/mdimg/perfume/375x500.707.jpg', desc:'Başka bir dünyadan gelen ışık. Güçlü ve gizemli.', top:'Yasemin', heart:'Kaşmir Ağacı', base:'Beyaz Amber' },
+        { cat:'gizemli', brand:'YSL', name:'Opium', img:'https://fimgs.net/mdimg/perfume/375x500.93.jpg', desc:'Efsanevi, baharatlı ve kışkırtıcı bir doğu masalı.', top:'Mandalina, Bergamot', heart:'Mür, Yasemin', base:'Amber, Vanilya' },
+        { cat:'gizemli', brand:'VERSACE', name:'Crystal Noir', img:'https://fimgs.net/mdimg/perfume/375x500.631.jpg', desc:'Gizemli gardenya ve sıcak baharatların geceye dokunuşu.', top:'Zencefil, Biber', heart:'Gardenya', base:'Sandal Ağacı' },
+        { cat:'gizemli', brand:'GIVENCHY', name:'L\'Interdit Rouge', img:'https://fimgs.net/mdimg/perfume/375x500.68656.jpg', desc:'Yasak olanın çekiciliği. Ateşli ve tutkulu.', top:'Kan Portakalı', heart:'Sümbülteber', base:'Sandal Ağacı' },
+        { cat:'gizemli', brand:'NARCISO RODRIGUEZ', name:'Musc Noir', img:'https://fimgs.net/mdimg/perfume/375x500.64761.jpg', desc:'Derin, bağımlılık yapan ve tenle bütünleşen misk.', top:'Erik', heart:'Misk', base:'Süet' },
+        { cat:'gizemli', brand:'KILIAN', name:'Angels\' Share', img:'https://fimgs.net/mdimg/perfume/375x500.62615.jpg', desc:'Konyak fıçılarının melek payı. Lüks ve sarhoş edici.', top:'Konyak', heart:'Tarçın, Meşe', base:'Pralin, Vanilya' },
+        { cat:'gizemli', brand:'JO MALONE', name:'Velvet Rose & Oud', img:'https://fimgs.net/mdimg/perfume/375x500.15340.jpg', desc:'Karanlık gül ve değerli öd ağacının manyetik çekimi.', top:'Karanfil', heart:'Şam Gülü', base:'Öd Ağacı' },
+        { cat:'gizemli', brand:'BYREDO', name:'Bibliothèque', img:'https://fimgs.net/mdimg/perfume/375x500.43798.jpg', desc:'Eski kitapların, derinin ve mumların huzurlu gizemi.', top:'Şeftali, Erik', heart:'Menekşe, Şakayık', base:'Deri, Vanilya' },
+
+        // --- GURME (Tatlı, Şekerli, Vanilya) ---
+        { cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilyanın bağımlılık yapan rock-chic enerjisi.', top:'Armut, Pembe Biber', heart:'Kahve, Yasemin', base:'Vanilya, Paçuli' },
+        { cat:'gurme', brand:'KILIAN', name:'Love, Don\'t Be Shy', img:'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', desc:'Rihanna\'nın tercihi. Marshmallow ve portakal çiçeği rüyası.', top:'Neroli, Bergamot', heart:'Portakal Çiçeği', base:'Marshmallow, Karamel' },
+        { cat:'gurme', brand:'PRADA', name:'Candy', img:'https://fimgs.net/mdimg/perfume/375x500.12426.jpg', desc:'Aşırı dozda karamel ve benzoin ile şımarık bir tatlılık.', top:'Karamel', heart:'Pudra', base:'Benzoin, Vanilya' },
+        { cat:'gurme', brand:'VIKTOR&ROLF', name:'Bonbon', img:'https://fimgs.net/mdimg/perfume/375x500.23316.jpg', desc:'Karamelize şeftali ve portakal çiçeği şekeri.', top:'Mandalina, Şeftali', heart:'Karamel', base:'Amber' },
+        { cat:'gurme', brand:'ARIANA GRANDE', name:'Cloud', img:'https://fimgs.net/mdimg/perfume/375x500.50384.jpg', desc:'Krem şanti ve hindistan cevizi bulutlarının üzerinde.', top:'Lavanta, Bergamot', heart:'Krem Şanti', base:'Odunsu Notalar' },
+        { cat:'gurme', brand:'BILLIE EILISH', name:'Eilish No. 1', img:'https://fimgs.net/mdimg/perfume/375x500.70293.jpg', desc:'Sıcak kakao, vanilya ve baharatlı notaların kucaklaması.', top:'Şekerli Yapraklar', heart:'Kakao, Vanilya', base:'Tonka, Odunsu' },
+        { cat:'gurme', brand:'DOLCE & GABBANA', name:'The Only One', img:'https://fimgs.net/mdimg/perfume/375x500.51249.jpg', desc:'Menekşe ve kahvenin beklenmedik, tatlı uyumu.', top:'Menekşe', heart:'Kahve, İris', base:'Vanilya, Paçuli' },
+        { cat:'gurme', brand:'JEAN PAUL GAULTIER', name:'Scandal', img:'https://fimgs.net/mdimg/perfume/375x500.45714.jpg', desc:'Bal ve gardenyanın skandal yaratan birleşimi.', top:'Kan Portakalı', heart:'Bal, Gardenya', base:'Paçuli' },
+        { cat:'gurme', brand:'SOL DE JANEIRO', name:'Cheirosa \'62', img:'https://fimgs.net/mdimg/perfume/375x500.62365.jpg', desc:'Brezilya plajları, fıstık ve tuzlu karamel.', top:'Fıstık, Badem', heart:'Tuzlu Karamel', base:'Vanilya' },
+        { cat:'gurme', brand:'KAYALI', name:'Vanilla | 28', img:'https://fimgs.net/mdimg/perfume/375x500.53127.jpg', desc:'Saf esmer şeker ve zengin vanilyanın en yoğun hali.', top:'Vanilya Orkidesi', heart:'Esmer Şeker', base:'Amber, Misk' },
+
+        // --- TEMİZ (Sabunsu, Beyaz, Misk) ---
+        { cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Pazar sabahı temiz çarşafların verdiği huzur ve tazelik.', top:'Aldehitler', heart:'İnci Çiçeği', base:'Beyaz Misk' },
+        { cat:'temiz', brand:'BYREDO', name:'Blanche', img:'https://fimgs.net/mdimg/perfume/375x500.6033.jpg', desc:'Beyaz rengin parfüme dönüşmüş hali. Saf ve duru.', top:'Beyaz Gül', heart:'Menekşe', base:'Sandal Ağacı' },
+        { cat:'temiz', brand:'CLEAN', name:'Warm Cotton', img:'https://fimgs.net/mdimg/perfume/375x500.2526.jpg', desc:'Kurutucudan yeni çıkmış sıcacık havlu kokusu.', top:'Limon', heart:'Deniz Notaları', base:'Amber, Misk' },
+        { cat:'temiz', brand:'JULIETTE HAS A GUN', name:'Not A Perfume', img:'https://fimgs.net/mdimg/perfume/375x500.10296.jpg', desc:'Parfüm değil, sadece temizlik. Teninizin en güzel hali.', top:'Cetalox', heart:'Cetalox', base:'Cetalox' },
+        { cat:'temiz', brand:'PHILOSOPHY', name:'Amazing Grace', img:'https://fimgs.net/mdimg/perfume/375x500.2066.jpg', desc:'Bergamot ve müge çiçeğinin inanılmaz hafifliği.', top:'Bergamot', heart:'Müge Çiçeği', base:'Misk' },
+        { cat:'temiz', brand:'NARCISO RODRIGUEZ', name:'Pure Musc', img:'https://fimgs.net/mdimg/perfume/375x500.53488.jpg', desc:'Miskin en saf ve en bağımlılık yapıcı formu.', top:'Misk', heart:'Çiçeksi Notalar', base:'Kaşmir' },
+        { cat:'temiz', brand:'CHANEL', name:'No 5 L\'Eau', img:'https://fimgs.net/mdimg/perfume/375x500.40069.jpg', desc:'Klasik No 5\'in su gibi berrak ve modern yorumu.', top:'Limon, Mandalina', heart:'Gül, Yasemin', base:'Sedir, Misk' },
+        { cat:'temiz', brand:'MOSCHINO', name:'Toy 2', img:'https://fimgs.net/mdimg/perfume/375x500.51327.jpg', desc:'Elma ve temizlik hissinin oyuncak ayısı.', top:'Elma, Mandalina', heart:'Beyaz Frenk Üzümü', base:'Misk' },
+        { cat:'temiz', brand:'ACQUA DI PARMA', name:'Colonia Pura', img:'https://fimgs.net/mdimg/perfume/375x500.46083.jpg', desc:'İtalyan bergamotu ile kristal gibi bir berraklık.', top:'Bergamot', heart:'Nergis', base:'Paçuli, Misk' },
+        { cat:'temiz', brand:'LE LABO', name:'Another 13', img:'https://fimgs.net/mdimg/perfume/375x500.12200.jpg', desc:'Teninize yapışan, metalik ve temiz bir aura.', top:'Armut', heart:'Ambroxan', base:'Misk' }
+    ],
+    male: [
+        // --- MASKÜLEN (Sert, Vahşi, Deri) ---
+        { cat:'maskulen', brand:'DIOR', name:'Sauvage', img:'https://fimgs.net/mdimg/perfume/375x500.31009.jpg', desc:'Vahşi doğanın ve asilliğin buluşması. Güçlü bir imza.', top:'Bergamot', heart:'Biber, Lavanta', base:'Ambroxan' },
+        { cat:'maskulen', brand:'TERRE D\'HERMES', name:'Terre d\'Hermes', img:'https://fimgs.net/mdimg/perfume/375x500.17.jpg', desc:'Toprağın gökyüzüyle buluştuğu yer. Mineral ve odunsu.', top:'Portakal', heart:'Biber', base:'Sedir, Vetiver' },
+        { cat:'maskulen', brand:'TOM FORD', name:'Ombré Leather', img:'https://fimgs.net/mdimg/perfume/375x500.50239.jpg', desc:'Çölün kalbinden gelen özgür deri kokusu.', top:'Kakule', heart:'Deri, Yasemin', base:'Amber, Yosun' },
+        { cat:'maskulen', brand:'VIKTOR&ROLF', name:'Spicebomb Extreme', img:'https://fimgs.net/mdimg/perfume/375x500.30499.jpg', desc:'Baharatların patlayıcı ve ateşli gücü.', top:'Kimyon', heart:'Karabiber', base:'Tütün, Vanilya' },
+        { cat:'maskulen', brand:'BVLGARI', name:'Man in Black', img:'https://fimgs.net/mdimg/perfume/375x500.26358.jpg', desc:'Ateş tanrısının modern yorumu. Rom ve baharatlar.', top:'Rom, Baharat', heart:'Deri, Sümbülteber', base:'Tonka, Guaiac' },
+        { cat:'maskulen', brand:'YSL', name:'Kouros', img:'https://fimgs.net/mdimg/perfume/375x500.735.jpg', desc:'Tanrıların gücü. Klasik, sert ve hayvansal.', top:'Kişniş', heart:'Karanfil', base:'Misk, Deri' },
+        { cat:'maskulen', brand:'GUCCI', name:'Guilty Absolute', img:'https://fimgs.net/mdimg/perfume/375x500.43040.jpg', desc:'Kuru, odunsu ve tavizsiz bir deri kokusu.', top:'Deri', heart:'Paçuli', base:'Odunsu Notalar' },
+        { cat:'maskulen', brand:'BENTLEY', name:'For Men Intense', img:'https://fimgs.net/mdimg/perfume/375x500.17666.jpg', desc:'Lüks arabaların deri koltukları ve rom.', top:'Bergamot', heart:'Rom, Tarçın', base:'Deri, Tütsü' },
+        { cat:'maskulen', brand:'LALIQUE', name:'Encre Noire', img:'https://fimgs.net/mdimg/perfume/375x500.1834.jpg', desc:'Karanlık bir ormanda vetiverin en koyu hali.', top:'Selvi', heart:'Vetiver', base:'Kaşmir Ağacı' },
+        { cat:'maskulen', brand:'NARCISO RODRIGUEZ', name:'For Him Bleu Noir', img:'https://fimgs.net/mdimg/perfume/375x500.31175.jpg', desc:'Modern erkeğin gizemli ve çekici karanlığı.', top:'Hindistan Cevizi', heart:'Misk', base:'Sedir, Abanoz' },
+
+        // --- ŞIK (Modern, Takım Elbise, Ofis) ---
+        { cat:'sik', brand:'CHANEL', name:'Bleu de Chanel', img:'https://fimgs.net/mdimg/perfume/375x500.10786.jpg', desc:'Özgürlüğe adanmış, derin bir odunsu koku.', top:'Limon, Nane', heart:'Zencefil', base:'Tütsü, Sandal' },
+        { cat:'sik', brand:'PRADA', name:'L\'Homme', img:'https://fimgs.net/mdimg/perfume/375x500.39029.jpg', desc:'Temiz, sabunsu ve inanılmaz derecede sofistike.', top:'Neroli', heart:'İris, Menekşe', base:'Amber' },
+        { cat:'sik', brand:'ARMANI', name:'Code Parfum', img:'https://fimgs.net/mdimg/perfume/375x500.75110.jpg', desc:'Yenilenmiş bir kod. Güçlü ve zarif.', top:'Bergamot', heart:'İris', base:'Tonka, Sedir' },
+        { cat:'sik', brand:'YSL', name:'Y Le Parfum', img:'https://fimgs.net/mdimg/perfume/375x500.64724.jpg', desc:'Başarılı erkeğin karanlık ve yoğun imzası.', top:'Elma, Aldehit', heart:'Adaçayı', base:'Tonka, Sedir' },
+        { cat:'sik', brand:'DIOR', name:'Homme Intense', img:'https://fimgs.net/mdimg/perfume/375x500.13016.jpg', desc:'İrisin en maskülen ve pudralı hali. Tam bir başyapıt.', top:'Lavanta', heart:'İris, Amber', base:'Sedir, Vetiver' },
+        { cat:'sik', brand:'GIVENCHY', name:'Gentleman Reserve Privee', img:'https://fimgs.net/mdimg/perfume/375x500.71457.jpg', desc:'Viski fıçılarından ilham alan çiçeksi odunsu zarafet.', top:'Bergamot', heart:'İris, Kestane', base:'Viski, Amber' },
+        { cat:'sik', brand:'HERMES', name:'H24', img:'https://fimgs.net/mdimg/perfume/375x500.66037.jpg', desc:'Teknolojik doğa. Metalik, yeşil ve yenilikçi.', top:'Adaçayı', heart:'Nergis', base:'Gül Ağacı' },
+        { cat:'sik', brand:'TOM FORD', name:'Grey Vetiver', img:'https://fimgs.net/mdimg/perfume/375x500.6697.jpg', desc:'Karizmatik, serin ve profesyonel vetiver.', top:'Greyfurt', heart:'Adaçayı', base:'Vetiver' },
+        { cat:'sik', brand:'MONTBLANC', name:'Explorer', img:'https://fimgs.net/mdimg/perfume/375x500.52002.jpg', desc:'Maceracı ruhlar için modern bir klasik.', top:'Bergamot', heart:'Vetiver', base:'Paçuli' },
+        { cat:'sik', brand:'VALENTINO', name:'Uomo Born in Roma', img:'https://fimgs.net/mdimg/perfume/375x500.56327.jpg', desc:'Roma sokaklarının modern ve asi ruhu.', top:'Mineral Tuz', heart:'Adaçayı', base:'Vetiver' },
+
+        // --- ENERJİK (Spor, Genç, Ferah) ---
+        { cat:'enerjik', brand:'VERSACE', name:'Eros', img:'https://fimgs.net/mdimg/perfume/375x500.16677.jpg', desc:'Aşk, tutku ve güzelliğin tanrısı. Nane ve vanilya patlaması.', top:'Nane, Elma', heart:'Tonka', base:'Vanilya' },
+        { cat:'enerjik', brand:'ARMANI', name:'Acqua di Gio', img:'https://fimgs.net/mdimg/perfume/375x500.410.jpg', desc:'Denizin ve rüzgarın ferahlığı. Dünyanın en sevilen kokusu.', top:'Deniz Notaları', heart:'Yasemin', base:'Misk' },
+        { cat:'enerjik', brand:'PACO RABANNE', name:'Invictus', img:'https://fimgs.net/mdimg/perfume/375x500.18471.jpg', desc:'Yenilmez şampiyonların kupası. Enerjik ve denizel.', top:'Greyfurt', heart:'Defne Yaprağı', base:'Ambergris' },
+        { cat:'enerjik', brand:'JEAN PAUL GAULTIER', name:'Le Beau', img:'https://fimgs.net/mdimg/perfume/375x500.55523.jpg', desc:'Cennet bahçesinden hindistan cevizi ve bergamot.', top:'Bergamot', heart:'Hindistan Cevizi', base:'Tonka' },
+        { cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue Pour Homme', img:'https://fimgs.net/mdimg/perfume/375x500.1067.jpg', desc:'Akdeniz erkeğinin çekiciliği ve ferahlığı.', top:'Greyfurt', heart:'Biber', base:'Misk' },
+        { cat:'enerjik', brand:'ISSEY MIYAKE', name:'L\'Eau d\'Issey Pour Homme', img:'https://fimgs.net/mdimg/perfume/375x500.721.jpg', desc:'Yuzu ve baharatların zamansız ferahlığı.', top:'Yuzu', heart:'Hindistan Cevizi', base:'Vetiver' },
+        { cat:'enerjik', brand:'AZZARO', name:'Wanted', img:'https://fimgs.net/mdimg/perfume/375x500.36626.jpg', desc:'Hedefi tutturanlar için limon ve zencefil enerjisi.', top:'Limon', heart:'Kakule', base:'Tonka' },
+        { cat:'enerjik', brand:'RALPH LAUREN', name:'Polo Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1198.jpg', desc:'Okyanusun derin maviliği ve özgürlük.', top:'Salatalık', heart:'Fesleğen', base:'Süet' },
+        { cat:'enerjik', brand:'DAVINDOFF', name:'Cool Water', img:'https://fimgs.net/mdimg/perfume/375x500.507.jpg', desc:'Okyanus ferahlığının atası. Saf adrenalin.', top:'Deniz Suyu', heart:'Nane', base:'Misk' },
+        { cat:'enerjik', brand:'CHANEL', name:'Allure Homme Sport', img:'https://fimgs.net/mdimg/perfume/375x500.613.jpg', desc:'Sınırları zorlayan sporcu ruhu. Kremamsı portakal.', top:'Portakal', heart:'Biber', base:'Tonka, Vanilya' },
+
+        // --- GİZEMLİ (Oryantal, Gece, Odunsu) ---
+        { cat:'gizemli', brand:'TOM FORD', name:'Oud Wood', img:'https://fimgs.net/mdimg/perfume/375x500.1826.jpg', desc:'Nadir, egzotik ve ayırt edici. Tapınak tütsüleri.', top:'Gül Ağacı', heart:'Öd Ağacı', base:'Tonka, Amber' },
+        { cat:'gizemli', brand:'AMOUAGE', name:'Interlude Man', img:'https://fimgs.net/mdimg/perfume/375x500.15294.jpg', desc:'Mavi canavar. Kaosun ortasındaki huzur. Yoğun tütsü.', top:'Kekik', heart:'Tütsü, Amber', base:'Deri, Öd' },
+        { cat:'gizemli', brand:'NASOMATTO', name:'Black Afgano', img:'https://fimgs.net/mdimg/perfume/375x500.6093.jpg', desc:'Karanlık, dumanlı ve hipnotize edici.', top:'Kenevir', heart:'Reçine', base:'Tütsü, Öd' },
+        { cat:'gizemli', brand:'MAISON FRANCIS KURKDJIAN', name:'Grand Soir', img:'https://fimgs.net/mdimg/perfume/375x500.40202.jpg', desc:'Paris gecelerinin kehribar rengi parıltısı.', top:'İspanyol Laden', heart:'Benzoin', base:'Vanilya, Amber' },
+        { cat:'gizemli', brand:'INITIO', name:'Oud for Greatness', img:'https://fimgs.net/mdimg/perfume/375x500.53641.jpg', desc:'Kutsal geometri ve öd ağacının yüceliği.', top:'Safran', heart:'Öd Ağacı', base:'Misk, Paçuli' },
+        { cat:'gizemli', brand:'KILIAN', name:'Intoxicated', img:'https://fimgs.net/mdimg/perfume/375x500.27092.jpg', desc:'Türk kahvesinden ilham alan bağımlılık.', top:'Kakule', heart:'Kahve', base:'Tarçın' },
+        { cat:'gizemli', brand:'PENHALIGON\'S', name:'The Tragedy of Lord George', img:'https://fimgs.net/mdimg/perfume/375x500.40716.jpg', desc:'Aristokrat, sabunsu ama gizli sırları olan bir koku.', top:'Brendi', heart:'Tıraş Sabunu', base:'Tonka' },
+        { cat:'gizemli', brand:'XERJOFF', name:'Naxos', img:'https://fimgs.net/mdimg/perfume/375x500.30693.jpg', desc:'Sicilya\'nın kalbi. Bal, tütün ve lavanta.', top:'Lavanta', heart:'Bal, Tarçın', base:'Tütün Yaprağı' },
+        { cat:'gizemli', brand:'BYREDO', name:'Tobacco Mandarin', img:'https://fimgs.net/mdimg/perfume/375x500.63266.jpg', desc:'Geçmişin dumanlı ve baharatlı izleri.', top:'Mandalina', heart:'Deri', base:'Tütün, Öd' },
+        { cat:'gizemli', brand:'MEMO PARIS', name:'African Leather', img:'https://fimgs.net/mdimg/perfume/375x500.31383.jpg', desc:'Safari rüzgarı ve baharatlı deri.', top:'Kakule', heart:'Sardunya', base:'Deri, Paçuli' },
+
+        // --- CENTİLMEN (Klasik, Lider, Güçlü) ---
+        { cat:'centilmen', brand:'CREED', name:'Aventus', img:'https://fimgs.net/mdimg/perfume/375x500.9828.jpg', desc:'Güç, vizyon ve başarıyı kutlayan imparator kokusu.', top:'Ananas, Bergamot', heart:'Huş Ağacı', base:'Misk, Meşe Yosunu' },
+        { cat:'centilmen', brand:'ROJA PARFUMS', name:'Elysium', img:'https://fimgs.net/mdimg/perfume/375x500.45229.jpg', desc:'Cennet bahçelerinden gelen narenciye ve vetiver.', top:'Greyfurt', heart:'Ardıç', base:'Ambergris' },
+        { cat:'centilmen', brand:'PARFUMS DE MARLY', name:'Layton', img:'https://fimgs.net/mdimg/perfume/375x500.39314.jpg', desc:'Versailles sarayının asaletini taşıyan elma ve vanilya.', top:'Elma, Lavanta', heart:'Menekşe', base:'Vanilya' },
+        { cat:'centilmen', brand:'ACQUA DI PARMA', name:'Colonia', img:'https://fimgs.net/mdimg/perfume/375x500.1681.jpg', desc:'1916\'dan beri değişmeyen İtalyan şıklığı.', top:'Sicilya Narenciyesi', heart:'Lavanta', base:'Biberiye' },
+        { cat:'centilmen', brand:'GUERLAIN', name:'L\'Homme Idéal', img:'https://fimgs.net/mdimg/perfume/375x500.25779.jpg', desc:'İdeal erkeğin badem ve deri kokusu.', top:'Badem', heart:'Kiraz', base:'Deri' },
+        { cat:'centilmen', brand:'CARTIER', name:'Pasha de Cartier', img:'https://fimgs.net/mdimg/perfume/375x500.59628.jpg', desc:'Zamanın ötesinde, karizmatik ve seçkin.', top:'Nane', heart:'Lavanta', base:'Sandal Ağacı' },
+        { cat:'centilmen', brand:'DUNHILL', name:'Icon', img:'https://fimgs.net/mdimg/perfume/375x500.29367.jpg', desc:'İngiliz centilmeninin modern yorumu.', top:'Neroli', heart:'Karabiber', base:'Vetiver' },
+        { cat:'centilmen', brand:'NISHANE', name:'Hacivat', img:'https://fimgs.net/mdimg/perfume/375x500.44174.jpg', desc:'Gölge oyunlarından ilham alan, kalıcı ve güçlü bir şipre.', top:'Ananas, Greyfurt', heart:'Yasemin', base:'Meşe Yosunu' },
+        { cat:'centilmen', brand:'FREDERIC MALLE', name:'Musc Ravageur', img:'https://fimgs.net/mdimg/perfume/375x500.2831.jpg', desc:'Sofistike, sıcak ve tensel bir başyapıt.', top:'Lavanta', heart:'Tarçın', base:'Vanilya, Misk' },
+        { cat:'centilmen', brand:'MAISON MARGIELA', name:'Jazz Club', img:'https://fimgs.net/mdimg/perfume/375x500.20541.jpg', desc:'Brooklyn caz kulübü. Puro, rom ve deri koltuklar.', top:'Pembe Biber', heart:'Rom', base:'Tütün Yaprağı' }
+    ]
+};
